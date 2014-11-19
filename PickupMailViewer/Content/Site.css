@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.mail-row:hover {
+    background-color: rgba(139, 149, 255, 0.56);
+    cursor: pointer;
+}
