@@ -1,0 +1,30 @@
+﻿@model IEnumerable<PickupMailViewer.Models.MailModel>
+
+<table class="table">
+    <tr>
+        <th>
+            Sent Date
+        </th>
+        <th>
+            To
+        </th>
+        <th>
+            Subject
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="mail-row" data-mail-id="@item.MailId">
+            <td>
+                @Html.DisplayFor(modelItem => item.SentOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+        </tr>
+    }
+</table>
