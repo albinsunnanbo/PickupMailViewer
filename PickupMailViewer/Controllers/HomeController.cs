@@ -13,25 +13,34 @@ namespace PickupMailViewer.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(GetMailListModel());
         }
 
         public ActionResult FileList()
         {
+            return View(GetMailListModel());
+        }
+
+        private static IOrderedEnumerable<MailModel> GetMailListModel()
+        {
             var mailPaths = MailHelper.ListMailFiles(Properties.Settings.Default.MailDir);
             var mails = mailPaths.Select(path => new MailModel(path)).OrderByDescending(m => m.SentOn);
-            return View(mails);
+            return mails;
         }
 
         public FileResult DownloadMail(string mailId)
         {
             if (mailId.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) > 0)
             {
-                throw new ArgumentException("Invalid characters in mailid", mailId);
+                throw new ArgumentException("Invalid characters in mailId", "mailId");
             }
-            var filePath = Path.Combine(Properties.Settings.Default.MailDir, mailId + ".eml");
+            var filePath = Path.Combine(Properties.Settings.Default.MailDir, mailId);
+            if (!MailHelper.ListMailFiles(Properties.Settings.Default.MailDir).Contains(filePath))
+            {
+                throw new ArgumentException("mailId is not in while list", "mailId");
+            }
             var result = new FileStreamResult(new FileStream(filePath, FileMode.Open), "message/rfc822");
-            result.FileDownloadName = mailId + ".eml";
+            result.FileDownloadName = mailId;
             return result;
         }
     }

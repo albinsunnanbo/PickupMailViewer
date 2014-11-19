@@ -4,6 +4,6 @@ $(function () {
     "use strict";
 
     $("body").on("click", ".mail-row", function () {
-        document.location = "Home/DownloadMail?mailId=" + $(this).data("mail-id");
+        document.location.href = "Home/DownloadMail?mailId=" + $(this).data("mail-id");
     });
 });

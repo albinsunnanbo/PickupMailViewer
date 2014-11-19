@@ -45,7 +45,7 @@ namespace PickupMailViewer.Models
         {
             get
             {
-                return Path.GetFileNameWithoutExtension(mailPath);
+                return Path.GetFileName(mailPath);
             }
         }
     }
