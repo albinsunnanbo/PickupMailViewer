@@ -21,7 +21,7 @@
                     $('<div>' +
                         '<div>From: ' + message.FromAddress + '</div>' +
                         '<div>To: ' + message.ToAddress + '</div>' +
-                        '<div>SentOn: ' + message.SentOn + '</div>' +
+                        '<div>Sent date: ' + new Date(parseInt(message.SentOn.substr(6))).toLocaleString() + '</div>' +
                         '<div>Subject: ' + message.Subject + '</div>' +
                         '<hr/>' +
                         '<div class="mail-body">' + message.Body + '</div>' +
@@ -49,7 +49,7 @@
             $.each(messages, function (idx, message) {
                 var newRow = $(
                     '<tr class="mail-row" data-mail-id="' + message.MailId + '">' +
-                    '<td>' + message.SentOn + '</td>' +
+                    '<td>' + new Date(message.SentOn).toLocaleString() + '</td>' +
                     '<td>' + message.ToAddress + '</td>' +
                     '<td>' + message.Subject + '</td>' +
                     '</tr>');
