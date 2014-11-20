@@ -24,7 +24,7 @@
                         '<div>SentOn: ' + message.SentOn + '</div>' +
                         '<div>Subject: ' + message.Subject + '</div>' +
                         '<hr/>' +
-                        '<div>' + message.Body + '</div>' +
+                        '<div class="mail-body">' + message.Body + '</div>' +
                         '<hr/>' +
                         '<a href="Home/DownloadMail?mailId=' + mailId + '">Download mail</a>' +
                         '</div>').dialog({ width: 800, height: 600 });

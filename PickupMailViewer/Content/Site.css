@@ -28,3 +28,7 @@ textarea {
     background-color: rgba(139, 149, 255, 0.56);
     cursor: pointer;
 }
+
+.mail-body {
+    white-space: pre-wrap;
+}
