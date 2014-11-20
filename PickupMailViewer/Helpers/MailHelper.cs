@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,9 +16,13 @@ namespace PickupMailViewer.Helpers
             return Directory.EnumerateFiles(path, "*.eml");
         }
 
+        public static ConcurrentDictionary<string, CDO.Message> messageCache = new ConcurrentDictionary<string, CDO.Message>();
         public static CDO.Message ReadMessage(String emlFileName)
         {
-
+            return messageCache.GetOrAdd(emlFileName, f => ReadMessageUnCached(f));
+        }
+        private static CDO.Message ReadMessageUnCached(String emlFileName)
+        {
             for (int i = 0; i < maxRetries; i++)
             {
                 try
