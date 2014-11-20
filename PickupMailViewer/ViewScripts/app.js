@@ -1,11 +1,35 @@
-﻿/// <reference path="C:\Users\Albin\Documents\GitHub\PickupMailViewer\PickupMailViewer\Scripts/_references.js" />
+﻿/// <reference path="../Scripts/_references.js" />
 
 (function () {
     "use strict";
 
+
+    jQuery.fn.flash = function (color, duration, noTimes) {
+        noTimes = noTimes || 1;
+        var current = this.css('background-color');
+        for (var i = 0; i < noTimes; i++) {
+            this.animate({ 'background-color': 'rgb(' + color + ')' }, duration / 2);
+            this.animate({ 'background-color': current }, duration / 2);
+        }
+    }
+
     $(function () {
         $("body").on("click", ".mail-row", function () {
-            document.location.href = "Home/DownloadMail?mailId=" + $(this).data("mail-id");
+            var mailId = $(this).data("mail-id");
+            $.getJSON("Home/GetMailDetails", { mailId: mailId },
+                function (message) {
+                    $('<div>' +
+                        '<div>From: ' + message.FromAddress + '</div>' +
+                        '<div>To: ' + message.ToAddress + '</div>' +
+                        '<div>SentOn: ' + message.SentOn + '</div>' +
+                        '<div>Subject: ' + message.Subject + '</div>' +
+                        '<hr/>' +
+                        '<div>' + message.Body + '</div>' +
+                        '<hr/>' +
+                        '<a href="Home/DownloadMail?mailId=' + mailId + '">Download mail</a>' +
+                        '</div>').dialog({ width: 800, height: 600 });
+                }
+            );
         });
     });
 
@@ -23,12 +47,17 @@
 
             // Add the messages to the page.
             $.each(messages, function (idx, message) {
-                $('#mail-table tr:first()').after(
-                '<tr class="mail-row" data-mail-id="' + message.MailId + '">' +
-                '<td>' + message.SentOn + '</td>' +
-                '<td>' + message.ToAddress + '</td>' +
-                '<td>' + message.Subject + '</td>' +
-                '</tr>');
+                var newRow = $(
+                    '<tr class="mail-row" data-mail-id="' + message.MailId + '">' +
+                    '<td>' + message.SentOn + '</td>' +
+                    '<td>' + message.ToAddress + '</td>' +
+                    '<td>' + message.Subject + '</td>' +
+                    '</tr>');
+                $('#mail-table tr:first()').after(newRow);
+
+                //flash
+                newRow.flash('255,255,0', 1000, 3);
+
             });
         };
         // Start the connection.

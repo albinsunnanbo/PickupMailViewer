@@ -33,12 +33,26 @@ namespace PickupMailViewer.Models
             }
         }
 
+        public string FromAddress
+        {
+            get
+            {
+                return new System.Net.Mail.MailAddress(mail.From).Address;
+            }
+        }
+
+
         public string Subject
         {
             get
             {
                 return mail.Subject;
             }
+        }
+
+        public string Body
+        {
+            get { return mail.TextBody; }
         }
 
         public string MailId
