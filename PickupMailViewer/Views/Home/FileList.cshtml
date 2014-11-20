@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<PickupMailViewer.Models.MailModel>
 
-<table class="table">
+<table class="table" id="mail-table">
     <tr>
         <th>
             Sent Date
@@ -15,16 +15,6 @@
 
     @foreach (var item in Model)
     {
-        <tr class="mail-row" data-mail-id="@item.MailId">
-            <td>
-                @Html.DisplayFor(modelItem => item.SentOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ToAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subject)
-            </td>
-        </tr>
+        @Html.Partial("FileRow", item)
     }
 </table>

@@ -16,6 +16,8 @@ namespace PickupMailViewer
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            MailWatcher.Init();
         }
     }
 }

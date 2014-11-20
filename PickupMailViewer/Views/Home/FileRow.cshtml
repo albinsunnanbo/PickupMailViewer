@@ -1,0 +1,13 @@
+﻿@model PickupMailViewer.Models.MailModel
+
+<tr class="mail-row" data-mail-id="@Model.MailId">
+    <td>
+        @Html.DisplayFor(model => Model.SentOn)
+    </td>
+    <td>
+        @Html.DisplayFor(model => Model.ToAddress)
+    </td>
+    <td>
+        @Html.DisplayFor(model => Model.Subject)
+    </td>
+</tr>
