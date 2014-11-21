@@ -25,7 +25,7 @@ textarea {
 
 
 .mail-row:hover {
-    background-color: rgba(139, 149, 255, 0.56);
+    background-color: rgba(139, 149, 255, 0.56) !important; /* !important required to override jQuery animate*/
     cursor: pointer;
 }
 

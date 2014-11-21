@@ -4,12 +4,13 @@
     "use strict";
 
 
-    jQuery.fn.flash = function (color, duration, noTimes) {
+    jQuery.fn.flash = function (color, duration, noTimes, durationOut) {
         noTimes = noTimes || 1;
+        durationOut = durationOut | duration;
         var current = this.css('background-color');
         for (var i = 0; i < noTimes; i++) {
             this.animate({ 'background-color': 'rgb(' + color + ')' }, duration / 2);
-            this.animate({ 'background-color': current }, duration / 2);
+            this.animate({ 'background-color': current }, durationOut / 2);
         }
     }
 
@@ -18,16 +19,19 @@
             var mailId = $(this).data("mail-id");
             $.getJSON("Home/GetMailDetails", { mailId: mailId },
                 function (message) {
-                    $('<div>' +
+                    var dialogContent = $(
+                        '<div>' +
                         '<div>From: ' + message.FromAddress + '</div>' +
                         '<div>To: ' + message.ToAddress + '</div>' +
                         '<div>Sent date: ' + new Date(parseInt(message.SentOn.substr(6))).toLocaleString() + '</div>' +
                         '<div>Subject: ' + message.Subject + '</div>' +
                         '<hr/>' +
-                        '<div class="mail-body">' + message.Body + '</div>' +
+                        '<div class="mail-body"></div>' +
                         '<hr/>' +
                         '<a href="Home/DownloadMail?mailId=' + mailId + '">Download mail</a>' +
-                        '</div>').dialog({ width: 800, height: 600 });
+                        '</div>');
+                    dialogContent.find('.mail-body').text(message.Body);
+                    dialogContent.dialog({ width: 800, height: 600 });
                 }
             );
         });
@@ -57,6 +61,7 @@
 
                 //flash
                 newRow.flash('255,255,0', 1000, 3);
+                newRow.flash('255,255,128', 1000, 1, 60000);
 
             });
         };
