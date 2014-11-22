@@ -44,7 +44,7 @@ namespace PickupMailViewer.Controllers
             return result;
         }
 
-        public JsonResult GetMailDetails(string mailId)
+        public ActionResult GetMailDetails(string mailId)
         {
             if (mailId.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) > 0)
             {
@@ -55,7 +55,7 @@ namespace PickupMailViewer.Controllers
             {
                 throw new ArgumentException("mailId is not in while list", "mailId");
             }
-            return Json(new MailModel(filePath), JsonRequestBehavior.AllowGet);
+            return PartialView(new MailModel(filePath));
         }
     }
 }

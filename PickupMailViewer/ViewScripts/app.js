@@ -17,20 +17,9 @@
     $(function () {
         $("body").on("click", ".mail-row", function () {
             var mailId = $(this).data("mail-id");
-            $.getJSON(baseUrl + "/Home/GetMailDetails", { mailId: mailId },
+            $.get(baseUrl + "/Home/GetMailDetails", { mailId: mailId },
                 function (message) {
-                    var dialogContent = $(
-                        '<div>' +
-                        '<div>From: ' + message.FromAddress + '</div>' +
-                        '<div>To: ' + message.ToAddress + '</div>' +
-                        '<div>Sent date: ' + new Date(parseInt(message.SentOn.substr(6))).toLocaleString() + '</div>' +
-                        '<div>Subject: ' + message.Subject + '</div>' +
-                        '<hr/>' +
-                        '<div class="mail-body"></div>' +
-                        '<hr/>' +
-                        '<a href="' + baseUrl + '/Home/DownloadMail?mailId=' + mailId + '">Download mail</a>' +
-                        '</div>');
-                    dialogContent.find('.mail-body').text(message.Body);
+                    var dialogContent = $(message);
                     dialogContent.dialog({ width: 800, height: 600 });
                 }
             );

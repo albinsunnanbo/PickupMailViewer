@@ -235,6 +235,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\FileList.cshtml" />
     <Content Include="Views\Home\FileRow.cshtml" />
+    <Content Include="Views\Home\GetMailDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
