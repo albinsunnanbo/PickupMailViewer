@@ -17,7 +17,7 @@
     $(function () {
         $("body").on("click", ".mail-row", function () {
             var mailId = $(this).data("mail-id");
-            $.getJSON("Home/GetMailDetails", { mailId: mailId },
+            $.getJSON(baseUrl + "/Home/GetMailDetails", { mailId: mailId },
                 function (message) {
                     var dialogContent = $(
                         '<div>' +
@@ -28,7 +28,7 @@
                         '<hr/>' +
                         '<div class="mail-body"></div>' +
                         '<hr/>' +
-                        '<a href="Home/DownloadMail?mailId=' + mailId + '">Download mail</a>' +
+                        '<a href="' + baseUrl + '/Home/DownloadMail?mailId=' + mailId + '">Download mail</a>' +
                         '</div>');
                     dialogContent.find('.mail-body').text(message.Body);
                     dialogContent.dialog({ width: 800, height: 600 });
