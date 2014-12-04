@@ -50,5 +50,9 @@ No way!
 By default there is no login, no encryption. Nothing that prevents anyone to read your sensitive mails.
 However the PickupMailViewer at least makes an effort to only display information from eml files and only from the MailDir path. No parent folders, no subfolders. That's about the protection you get.
 
+##Continous integration##
+Latest build exists on [AppVeyor](https://ci.appveyor.com/project/albinsunnanbo/pickupmailviewer).  
+Click on Artifacts for the latest deploy package.
+
 ##Contribution##
 Feel free to leave a pull request on GitHub.
