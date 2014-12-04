@@ -2,24 +2,9 @@ PickupMailViewer
 ================
 
 A web front end for viewing all files created by smtp with deliveryMethod="SpecifiedPickupDirectory"
-To configure your application to save all outgoing mails to a folder, edit app.config or web.config for your application to
+[See screenshots of Pickup Mail Viewer in action](Doc/screenshot.md) 
 
-    <configuration>
-      <system.net>
-        <mailSettings>
-          <smtp deliveryMethod="SpecifiedPickupDirectory" from="my-sender@mydomain.com">
-            <specifiedPickupDirectory pickupDirectoryLocation="c:\temp"/>
-            <!-- This settings isn't used, but without it an exception occurs on disposing
-            of the SmtpClient.-->
-            <network host="localhost"/>
-          </smtp>
-        </mailSettings>
-      </system.net>      
-    </configuration>
-
-You may of course use a path different from `c:\temp`
-
-## Installation ##
+##Installation##
 Build and publish to your IIS server.
 By default the PickupMailViewer will be installed in http://yourserver/MailViewer/
 You may edit the publish settings if you want to install in another path.
@@ -38,7 +23,25 @@ Default config is
       </applicationSettings>
     </configuration>
 
-The only settings you can change is `MailDir`. Default is `c:\temp` as that matches the setup in my current project. Change it to the same path your application is saving your mails to.
+The only settings you can change is `MailDir`. Default configuration is `c:\temp` as that matches the setup in my current project. Change it to the same path your application is saving your mails to.
+
+##Sending application configuration##
+To configure your own application to save all outgoing mails to a folder, edit app.config or web.config for your application to
+
+    <configuration>
+      <system.net>
+        <mailSettings>
+          <smtp deliveryMethod="SpecifiedPickupDirectory" from="my-sender@mydomain.com">
+            <specifiedPickupDirectory pickupDirectoryLocation="c:\temp"/>
+            <!-- This settings isn't used, but without it an exception occurs on disposing
+            of the SmtpClient.-->
+            <network host="localhost"/>
+          </smtp>
+        </mailSettings>
+      </system.net>
+    </configuration>
+
+You may of course use a path different from `c:\temp`
 
 ##Is it safe?##
 **tl;dr**
