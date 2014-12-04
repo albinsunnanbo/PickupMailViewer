@@ -15,7 +15,6 @@ namespace PickupMailViewer
         {
             fsw = new FileSystemWatcher(Properties.Settings.Default.MailDir, "*.eml");
             fsw.Created += OnNewMailFileCreated;
-            fsw.EnableRaisingEvents = true;
             fsw.Error += OnError;
             fsw.EnableRaisingEvents = true;
         }
