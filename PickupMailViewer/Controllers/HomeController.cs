@@ -45,7 +45,7 @@ namespace PickupMailViewer.Controllers
             return result;
         }
 
-        [OutputCache(Location = OutputCacheLocation.Downstream, VaryByParam = "mailId", Duration = 3600 * 24 * 7)] // No need to output cache on the server since the mailcontent is cached internally anyway
+        [OutputCache(Location = OutputCacheLocation.Downstream, VaryByParam = "mailId", Duration = 3600 * 24 * 7)] // No need to output cache on the server since the mail content is cached internally anyway
         public ActionResult GetMailDetails(string mailId)
         {
             if (mailId.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) > 0)
