@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace PickupMailViewer.Controllers
 {
@@ -44,6 +45,7 @@ namespace PickupMailViewer.Controllers
             return result;
         }
 
+        [OutputCache(Location = OutputCacheLocation.Downstream, VaryByParam = "mailId", Duration = 3600 * 24 * 7)] // No need to output cache on the server since the mailcontent is cached internally anyway
         public ActionResult GetMailDetails(string mailId)
         {
             if (mailId.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) > 0)
