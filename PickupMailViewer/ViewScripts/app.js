@@ -17,7 +17,7 @@
     $(function () {
         $("body").on("click", ".mail-row", function () {
             var mailId = $(this).data("mail-id");
-            $.get(baseUrl + "/Home/GetMailDetails", { mailId: mailId },
+            $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId },
                 function (message) {
                     var dialogContent = $(message);
                     dialogContent.dialog({ width: 800, height: 600 });
