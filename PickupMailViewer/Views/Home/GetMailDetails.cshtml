@@ -1,12 +1,12 @@
 ﻿@model PickupMailViewer.Models.MailModel
 
 <div>
+    @Html.ActionLink("Download mail", "DownloadMail", new { mailId = @Model.MailId })
+    <hr />
     <div>From: @Model.FromAddress</div>
     <div>To: @Model.ToAddress</div>
     <div>Sent date: @Html.DisplayFor(m => m.SentOn)</div>
     <div>Subject: @Model.Subject</div>
     <hr />
     <div class="mail-body">@Model.Body</div>
-    <hr />
-    @Html.ActionLink("Download mail", "DownloadMail", new { mailId = @Model.MailId })
 </div>
