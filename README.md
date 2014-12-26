@@ -44,9 +44,9 @@ To configure your own application to save all outgoing mails to a folder, edit a
 You may of course use a path different from `c:\temp`
 
 ##Is it safe?##
-**tl;dr**
+###tl;dr###
 No way!
-**The longer story**
+###The longer story###
 By default there is no login, no encryption. Nothing that prevents anyone to read your sensitive mails.
 However the PickupMailViewer at least makes an effort to only display information from eml files and only from the MailDir path. No parent folders, no subfolders. That's about the protection you get.
 
