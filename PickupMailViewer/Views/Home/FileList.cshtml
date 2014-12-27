@@ -1,5 +1,23 @@
 ﻿@model IEnumerable<PickupMailViewer.Models.MailModel>
 
+<script id="mailRowTemplate" type="text/html">
+    @* Mustache.js template for each row *@
+    <tr class="mail-row" data-mail-id="{{MailId}}">
+        <td>
+            {{SentOnFormatted}}
+        </td>
+        <td>
+            {{ToAddress}}
+        </td>
+        <td>
+            {{Subject}}
+        </td>
+    </tr>
+</script>
+<script id="initial-messages" type="application/json">
+    @* Initial mails in JSON format *@
+    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))
+</script>
 <table class="table" id="mail-table">
     <tr>
         <th>
@@ -13,8 +31,5 @@
         </th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        @Html.Partial("FileRow", item)
-    }
+    @* table rows are added via mustache.js templates from the JSON data in #initial-messages *@
 </table>

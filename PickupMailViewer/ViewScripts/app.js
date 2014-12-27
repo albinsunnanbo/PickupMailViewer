@@ -27,6 +27,14 @@
         });
     });
 
+    var loadInitialList = function () {
+        var messages = JSON.parse($("#initial-messages").html());
+        $.each(messages, function (idx, message) {
+            var newRow = ich.mailRowTemplate(message);
+            $('#mail-table tbody').append(newRow); // add as last row
+        });
+    };
+
     $(function () {
         // Reference the auto-generated proxy for the hub.
         var chat = $.connection.signalRHub;
@@ -41,15 +49,10 @@
 
             // Add the messages to the page.
             $.each(messages, function (idx, message) {
-                var newRow = $(
-                    '<tr class="mail-row" data-mail-id="' + message.MailId + '">' +
-                    '<td>' + new Date(message.SentOn).toLocaleString() + '</td>' +
-                    '<td>' + message.ToAddress + '</td>' +
-                    '<td>' + message.Subject + '</td>' +
-                    '</tr>');
-                $('#mail-table tr:first()').after(newRow);
+                var newRow = ich.mailRowTemplate(message);
+                $('#mail-table tr:first()').after(newRow); // add as first row after header row
 
-                //flash
+                // flash row color
                 newRow.flash('255,255,0', 1000, 3);
                 newRow.flash('255,255,128', 1000, 1, 60000);
 
@@ -62,6 +65,8 @@
 
         continousReconnect();
         setupNotifications();
+
+        loadInitialList();
     });
 
     // This optional function html-encodes messages for display in the page.

@@ -17,11 +17,20 @@ namespace PickupMailViewer.Models
             this.mail = MailHelper.ReadMessage(mailPath);
         }
 
+        [Newtonsoft.Json.JsonIgnore]
         public DateTime SentOn
         {
             get
             {
                 return mail.SentOn;
+            }
+        }
+
+        public string SentOnFormatted
+        {
+            get
+            {
+                return mail.SentOn.ToString();
             }
         }
 
@@ -50,6 +59,7 @@ namespace PickupMailViewer.Models
             }
         }
 
+        [Newtonsoft.Json.JsonIgnore]
         public string Body
         {
             get { return mail.TextBody; }

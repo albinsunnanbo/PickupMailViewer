@@ -28,6 +28,7 @@ namespace PickupMailViewer
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                       "~/Scripts/Autolinker.js",
+                      "~/Scripts/ICanHaz.js",
                       "~/ViewScripts/app.js"));
 
 
