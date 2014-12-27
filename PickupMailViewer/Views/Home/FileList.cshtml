@@ -19,17 +19,20 @@
     @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))
 </script>
 <table class="table" id="mail-table">
-    <tr>
-        <th>
-            Sent Date
-        </th>
-        <th>
-            To
-        </th>
-        <th>
-            Subject
-        </th>
-    </tr>
-
-    @* table rows are added via mustache.js templates from the JSON data in #initial-messages *@
+    <thead>
+        <tr>
+            <th>
+                Sent Date
+            </th>
+            <th>
+                To
+            </th>
+            <th>
+                Subject
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @* table rows are added via mustache.js templates from the JSON data in #initial-messages *@
+    </tbody>
 </table>

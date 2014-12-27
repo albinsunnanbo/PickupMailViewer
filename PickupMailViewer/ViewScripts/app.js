@@ -50,7 +50,7 @@
             // Add the messages to the page.
             $.each(messages, function (idx, message) {
                 var newRow = ich.mailRowTemplate(message);
-                $('#mail-table tr:first()').after(newRow); // add as first row after header row
+                $('#mail-table tbody').prepend(newRow); // add as first row after header row
 
                 // flash row color
                 newRow.flash('255,255,0', 1000, 3);
