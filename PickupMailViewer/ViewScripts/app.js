@@ -19,7 +19,8 @@
             var mailId = $(this).data("mail-id");
             $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId },
                 function (message) {
-                    var dialogContent = $(message);
+                    var linkedMessage = Autolinker.link(message);
+                    var dialogContent = $(linkedMessage);
                     dialogContent.dialog({ width: 800, height: 600 });
                 }
             );

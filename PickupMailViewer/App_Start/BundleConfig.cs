@@ -27,6 +27,7 @@ namespace PickupMailViewer
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                      "~/Scripts/Autolinker.js",
                       "~/ViewScripts/app.js"));
 
 

@@ -32,3 +32,7 @@ textarea {
 .mail-body {
     white-space: pre-wrap;
 }
+
+.ui-widget-content .mail-body a {
+    color: #428bca;
+}
