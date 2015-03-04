@@ -38,7 +38,7 @@ namespace PickupMailViewer.Models
         {
             get
             {
-                return new System.Net.Mail.MailAddress(mail.To).Address;
+                return string.Join(", ", mail.To.Split(',').Select(a => new System.Net.Mail.MailAddress(a).Address));
             }
         }
 
