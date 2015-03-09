@@ -8,5 +8,14 @@
     <div>Sent date: @Html.DisplayFor(m => m.SentOn)</div>
     <div>Subject: @Model.Subject</div>
     <hr />
-    <div class="mail-body">@Model.Body</div>
+    <div class="mail-body">
+        @if (Model.BodyIsHTML)
+        {
+            @Html.Raw(Model.Body)
+        }
+        else
+        {
+            @Model.Body;
+        }
+    </div>
 </div>
