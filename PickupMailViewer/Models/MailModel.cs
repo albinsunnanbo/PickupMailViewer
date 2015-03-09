@@ -59,10 +59,19 @@ namespace PickupMailViewer.Models
             }
         }
 
+        public bool BodyIsHTML { get { return (!string.IsNullOrEmpty(mail.HTMLBody)); } }
+
         [Newtonsoft.Json.JsonIgnore]
         public string Body
         {
-            get { return mail.TextBody; }
+            get
+            {
+                if (BodyIsHTML)
+                {
+                    return mail.HTMLBody;
+                }
+                return mail.TextBody;
+            }
         }
 
         public string MailId
