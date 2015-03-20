@@ -21,8 +21,6 @@ namespace PickupMailViewer.Models
 
         public SmsModel(string path)
         {
-            int failCount = 0;
-
             loadedData = JsonConvert.DeserializeObject<SmsData>(File.ReadAllText(path));
             sentOn = File.GetCreationTime(path);
         }
