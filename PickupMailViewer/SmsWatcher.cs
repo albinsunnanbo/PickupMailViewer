@@ -15,7 +15,7 @@ namespace PickupMailViewer
         private static FileSystemWatcher fsw;
         public static void Init()
         {
-            fsw = new FileSystemWatcher(Properties.Settings.Default.MailDir, "*.json");
+            fsw = new FileSystemWatcher(Properties.Settings.Default.MailDir, "*.sms");
             fsw.Created += OnNewSmsFileCreated;
             fsw.Error += OnError;
             fsw.EnableRaisingEvents = true;

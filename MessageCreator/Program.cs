@@ -43,7 +43,7 @@ namespace MessageCreator
 
         static void CreateSms(string location)
         {
-            var fileName = Path.Combine(location, Guid.NewGuid().ToString() + ".json");
+            var fileName = Path.Combine(location, Guid.NewGuid().ToString() + ".sms");
 
             using(var writer = new StreamWriter(fileName))
             {
