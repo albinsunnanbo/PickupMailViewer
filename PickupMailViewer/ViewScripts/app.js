@@ -33,6 +33,9 @@
         var messages = JSON.parse($("#initial-messages").html());
         $.each(messages, function (idx, message) {
             var newRow = ich.mailRowTemplate(message);
+            if (message.MailId != undefined) {
+                newRow.addClass("mail-row");
+            }
             $('#mail-table tbody').append(newRow); // add as last row
         });
     };
