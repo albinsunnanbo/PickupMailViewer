@@ -135,6 +135,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MailHelper.cs" />
+    <Compile Include="Helpers\SmsHelper.cs" />
     <Compile Include="SmsWatcher.cs" />
     <Compile Include="MailWatcher.cs" />
     <Compile Include="Models\MessageModel.cs" />
