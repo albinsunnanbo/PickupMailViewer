@@ -39,7 +39,7 @@
         // Reference the auto-generated proxy for the hub.
         var chat = $.connection.signalRHub;
         // Create a function that the hub can call back to display messages.
-        chat.client.newMail = function (messages) {
+        chat.client.newMessage = function (messages) {
             // if just a single string, wrap in an array
             if (!$.isArray(messages)) {
                 messages = [messages];

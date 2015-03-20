@@ -31,7 +31,7 @@ namespace PickupMailViewer
             {
                 var mail = new MailModel(e.FullPath);
                 var context = GlobalHost.ConnectionManager.GetHubContext<SignalRHub>();
-                context.Clients.All.newMail(mail);
+                context.Clients.All.newMessage(mail);
             }
         }
     }

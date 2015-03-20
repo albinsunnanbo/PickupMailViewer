@@ -21,6 +21,7 @@ namespace PickupMailViewer
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             MailWatcher.Init();
+            SmsWatcher.Init();
             Task.Factory.StartNew(FillCache);
         }
 
