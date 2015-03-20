@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{E93E6292-D94
 		Doc\screenshot.md = Doc\screenshot.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageCreator", "MessageCreator\MessageCreator.csproj", "{47462514-4F98-45B5-AD57-263A72916A8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{10D815DB-5F6A-4827-8E68-B4D5D79265E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10D815DB-5F6A-4827-8E68-B4D5D79265E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10D815DB-5F6A-4827-8E68-B4D5D79265E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47462514-4F98-45B5-AD57-263A72916A8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47462514-4F98-45B5-AD57-263A72916A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47462514-4F98-45B5-AD57-263A72916A8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47462514-4F98-45B5-AD57-263A72916A8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
