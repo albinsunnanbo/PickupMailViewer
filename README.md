@@ -2,7 +2,13 @@ PickupMailViewer
 ================
 
 A web front end for viewing all files created by smtp with deliveryMethod="SpecifiedPickupDirectory"
-[See screenshots of Pickup Mail Viewer in action](Doc/screenshot.md) 
+[See screenshots of Pickup Mail Viewer in action](Doc/screenshot.md)
+
+There's also support for viewing outgoing SMS messages sent from an application,
+if they are saved to the same directory as the mails. The SMS messages should
+be saved as .sms files, with the message, sender and recipient as JSON
+
+`{ From:"12345678", To:"987654321", Text:"Lorem ipsum dolor sit amet." }`
 
 ##Installation##
 Build and publish to your IIS server.
