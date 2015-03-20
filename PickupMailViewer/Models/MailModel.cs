@@ -66,7 +66,7 @@ namespace PickupMailViewer.Models
             }
         }
 
-        override public string MessageId
+        public string MailId
         {
             get
             {

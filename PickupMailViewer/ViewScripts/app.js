@@ -15,15 +15,17 @@
     }
 
     $(function () {
-        $("body").on("click", ".mail-row", function () {
+        $("body").on("click", ".message-row", function () {
             var mailId = $(this).data("mail-id");
-            $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId },
-                function (message) {
-                    var linkedMessage = Autolinker.link(message);
-                    var dialogContent = $(linkedMessage);
-                    dialogContent.dialog({ width: 800, height: 600 });
-                }
-            );
+            if (mailId != "") {
+                $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId },
+                   function (message) {
+                       var linkedMessage = Autolinker.link(message);
+                       var dialogContent = $(linkedMessage);
+                       dialogContent.dialog({ width: 800, height: 600 });
+                   }
+               );
+            }
         });
     });
 
@@ -50,6 +52,10 @@
             // Add the messages to the page.
             $.each(messages, function (idx, message) {
                 var newRow = ich.mailRowTemplate(message);
+                if (message.MailId != undefined) {
+                    newRow.addClass("mail-row");
+                }
+
                 $('#mail-table tbody').prepend(newRow); // add as first row after header row
 
                 // flash row color

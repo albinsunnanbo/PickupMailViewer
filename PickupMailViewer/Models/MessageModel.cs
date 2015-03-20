@@ -10,8 +10,6 @@ namespace PickupMailViewer.Models
 
         public abstract string FromAddress { get; }
 
-        public abstract string MessageId { get; }
-
         public abstract DateTime SentOn { get; }
 
         public string SentOnFormatted

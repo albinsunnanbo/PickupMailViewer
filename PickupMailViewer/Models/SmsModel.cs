@@ -17,7 +17,6 @@ namespace PickupMailViewer.Models
         }
 
         readonly SmsData loadedData;
-        readonly string messageId;
         readonly DateTime sentOn;
 
         public SmsModel(string path)
@@ -25,7 +24,6 @@ namespace PickupMailViewer.Models
             int failCount = 0;
 
             loadedData = JsonConvert.DeserializeObject<SmsData>(File.ReadAllText(path));
-            messageId = Path.GetFileName(path);
             sentOn = File.GetCreationTime(path);
         }
 
@@ -34,14 +32,6 @@ namespace PickupMailViewer.Models
             get
             {
                 return loadedData.From;
-            }
-        }
-
-        override public string MessageId
-        {
-            get
-            {
-                return messageId;
             }
         }
 
