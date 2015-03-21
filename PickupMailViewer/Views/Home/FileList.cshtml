@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<PickupMailViewer.Models.MessageModel>
 
-<script id="mailRowTemplate" type="text/html">
+<script id="messageRowTemplate" type="text/html">
     @* Mustache.js template for each row *@
     <tr class="message-row" data-mail-id="{{MailId}}">
+        <td>
+            <span class="glyphicon glyphicon-envelope"></span>
+            <span class="glyphicon glyphicon-phone"></span>
+        </td>
         <td>
             {{SentOnFormatted}}
         </td>
@@ -18,9 +22,10 @@
     @* Initial mails in JSON format *@
     @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))
 </script>
-<table class="table" id="mail-table">
+<table class="table" id="message-table">
     <thead>
         <tr>
+            <th></th>
             <th>
                 Sent Date
             </th>

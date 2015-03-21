@@ -73,5 +73,13 @@ namespace PickupMailViewer.Models
                 return Path.GetFileName(mailPath);
             }
         }
+
+        public override string MessageType
+        {
+            get
+            {
+                return "Mail";
+            }
+        }
     }
 }

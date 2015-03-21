@@ -29,14 +29,27 @@
         });
     });
 
+    function renderMessageRow(message)
+    {
+        var newRow = ich.messageRowTemplate(message);
+
+        switch (message.MessageType) {
+            case "Mail":
+                newRow.addClass("mail-row");
+                break;
+            case "Sms":
+                newRow.addClass("sms-row");
+                break;
+        }
+
+        return newRow;
+    }
+
     var loadInitialList = function () {
         var messages = JSON.parse($("#initial-messages").html());
         $.each(messages, function (idx, message) {
-            var newRow = ich.mailRowTemplate(message);
-            if (message.MailId != undefined) {
-                newRow.addClass("mail-row");
-            }
-            $('#mail-table tbody').append(newRow); // add as last row
+            var newRow = renderMessageRow(message);
+            $('#message-table tbody').append(newRow); // add as last row
         });
     };
 
@@ -54,12 +67,10 @@
 
             // Add the messages to the page.
             $.each(messages, function (idx, message) {
-                var newRow = ich.mailRowTemplate(message);
-                if (message.MailId != undefined) {
-                    newRow.addClass("mail-row");
-                }
 
-                $('#mail-table tbody').prepend(newRow); // add as first row after header row
+                var newRow = renderMessageRow(message);
+
+                $('#message-table tbody').prepend(newRow); // add as first row after header row
 
                 // flash row color
                 newRow.flash('255,255,0', 1000, 3);

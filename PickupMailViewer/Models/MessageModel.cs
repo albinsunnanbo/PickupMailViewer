@@ -23,5 +23,7 @@ namespace PickupMailViewer.Models
         public abstract string Subject { get; }
 
         public abstract string ToAddress { get; }
+
+        public abstract string MessageType { get; }
     }
 }

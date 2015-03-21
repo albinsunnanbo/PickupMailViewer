@@ -35,7 +35,7 @@ namespace PickupMailViewer.Models
 
         override public string Subject
         {
-            get 
+            get
             {
                 return loadedData.Text;
             }
@@ -46,6 +46,14 @@ namespace PickupMailViewer.Models
             get
             {
                 return loadedData.To;
+            }
+        }
+
+        public override string MessageType
+        {
+            get
+            {
+                return "Sms";
             }
         }
     }
