@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PickupMailViewer.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,20 +10,11 @@ namespace PickupMailViewer.Models
 {
     public class SmsModel : MessageModel
     {
-        private class SmsData
-        {
-            public string To { get; set; }
-            public string From { get; set; }
-            public string Text { get; set; }
-        }
-
         readonly SmsData loadedData;
-        readonly DateTime sentOn;
 
         public SmsModel(string path)
         {
-            loadedData = JsonConvert.DeserializeObject<SmsData>(File.ReadAllText(path));
-            sentOn = File.GetCreationTime(path);
+            loadedData = SmsHelper.ReadMessage(path);
         }
 
         override public string FromAddress
@@ -37,7 +29,7 @@ namespace PickupMailViewer.Models
         {
             get
             {
-                return sentOn;
+                return loadedData.SentOn;
             }
         }
 

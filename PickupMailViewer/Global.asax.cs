@@ -32,6 +32,12 @@ namespace PickupMailViewer
             {
                 MailHelper.ReadMessage(mailPath);
             }
+
+            var smsPaths = SmsHelper.ListSmsFiles(Properties.Settings.Default.MailDir);
+            foreach (var smsPath in smsPaths.Reverse())
+            {
+                SmsHelper.ReadMessage(smsPath);
+            }
         }
     }
 }
