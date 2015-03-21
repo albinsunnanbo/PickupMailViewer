@@ -25,7 +25,7 @@ namespace PickupMailViewer.Controllers
             var smsPaths = SmsHelper.ListSmsFiles(Properties.Settings.Default.MailDir);
             var sms = smsPaths.Select(path => new SmsModel(path));
 
-            var messages = mails.Cast<MessageModel>().Union(sms)
+            var messages = mails.Cast<MessageModel>().Concat(sms)
                 .OrderByDescending(m => m.SentOn);
 
             return messages;
