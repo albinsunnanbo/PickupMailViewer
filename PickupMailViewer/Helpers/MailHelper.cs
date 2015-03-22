@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web;
 
 namespace PickupMailViewer.Helpers
@@ -43,6 +44,14 @@ namespace PickupMailViewer.Helpers
                     msg.DataSource.OpenObject(stream, "_Stream");
                     msg.DataSource.Save();
                     return msg;
+                }
+                catch (COMException ex)
+                {
+                    if (i + 1 >= maxRetries || ex.HResult != -2146825286)
+                    {
+                        // Rethrow last time or if it isn't a file lock problem.
+                        throw;
+                    }
                 }
                 catch (IOException ex)
                 {
