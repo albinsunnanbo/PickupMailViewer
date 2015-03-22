@@ -36,3 +36,18 @@ textarea {
 .ui-widget-content .mail-body a {
     color: #428bca;
 }
+
+#message-table .glyphicon
+{
+    display: none;
+}
+
+#message-table .mail-row .glyphicon-envelope
+{
+    display: inline;
+}
+
+#message-table .sms-row .glyphicon-phone
+{
+    display: inline;
+}

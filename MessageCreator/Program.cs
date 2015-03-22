@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -40,6 +41,18 @@ namespace MessageCreator
             smtpClient.Send(message);
         }
 
+        static void CreateSms(string location)
+        {
+            var fileName = Path.Combine(location, Guid.NewGuid().ToString() + ".sms");
+
+            using(var writer = new StreamWriter(fileName))
+            {
+                // Too small to be worth bringing in a proper serializer.
+                writer.Write("{{ From:\"070-123456\", To:\"{0}\", Text:\"Lorem ipsum dolor sit amet.\" }}",
+                    Guid.NewGuid().ToString().Substring(0, 8));
+            }
+        }
+
         static void Main(string[] args)
         {
             using(var smtpClient = new SmtpClient())
@@ -52,14 +65,19 @@ namespace MessageCreator
                 ConsoleKeyInfo key;
                 do
                 {
-                    Console.WriteLine("Press space to create a mail in {0}, q to quit.",
+                    Console.WriteLine("Press M to create a mail in {0}, S to create an SMS or Q to quit.",
                         smtpClient.PickupDirectoryLocation);
 
                     key = Console.ReadKey(true);
 
-                    if (key.Key == ConsoleKey.Spacebar)
+                    if (key.Key == ConsoleKey.M)
                     {
                         CreateMail(smtpClient);
+                    }
+
+                    if (key.Key == ConsoleKey.S)
+                    {
+                        CreateSms(smtpClient.PickupDirectoryLocation);
                     }
 
                 } while (key.Key != ConsoleKey.Q);

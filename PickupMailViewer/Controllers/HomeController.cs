@@ -14,19 +14,21 @@ namespace PickupMailViewer.Controllers
     {
         public ActionResult Index()
         {
-            return View(GetMailListModel());
+            return View(GetMessageListModel());
         }
 
-        public ActionResult FileList()
-        {
-            return View(GetMailListModel());
-        }
-
-        private static IOrderedEnumerable<MailModel> GetMailListModel()
+        private static IOrderedEnumerable<MessageModel> GetMessageListModel()
         {
             var mailPaths = MailHelper.ListMailFiles(Properties.Settings.Default.MailDir);
-            var mails = mailPaths.Select(path => new MailModel(path)).OrderByDescending(m => m.SentOn);
-            return mails;
+            var mails = mailPaths.Select(path => new MailModel(path));
+
+            var smsPaths = SmsHelper.ListSmsFiles(Properties.Settings.Default.MailDir);
+            var sms = smsPaths.Select(path => new SmsModel(path));
+
+            var messages = mails.Cast<MessageModel>().Concat(sms)
+                .OrderByDescending(m => m.SentOn);
+
+            return messages;
         }
 
         public FileResult DownloadMail(string mailId)

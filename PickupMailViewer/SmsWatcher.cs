@@ -2,19 +2,21 @@
 using PickupMailViewer.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 namespace PickupMailViewer
 {
-    public static class MailWatcher
+    public static class SmsWatcher
     {
         private static FileSystemWatcher fsw;
         public static void Init()
         {
-            fsw = new FileSystemWatcher(Properties.Settings.Default.MailDir, "*.eml");
-            fsw.Created += OnNewMailFileCreated;
+            fsw = new FileSystemWatcher(Properties.Settings.Default.MailDir, "*.sms");
+            fsw.Created += OnNewSmsFileCreated;
             fsw.Error += OnError;
             fsw.EnableRaisingEvents = true;
         }
@@ -25,13 +27,14 @@ namespace PickupMailViewer
             Init();
         }
 
-        private static void OnNewMailFileCreated(object sender, FileSystemEventArgs e)
+        private static void OnNewSmsFileCreated(object sender, FileSystemEventArgs e)
         {
             if (e.ChangeType == WatcherChangeTypes.Created)
             {
-                var mail = new MailModel(e.FullPath);
+                var sms = new SmsModel(e.FullPath);
+
                 var context = GlobalHost.ConnectionManager.GetHubContext<SignalRHub>();
-                context.Clients.All.newMessage(mail);
+                context.Clients.All.newMessage(sms);
             }
         }
     }

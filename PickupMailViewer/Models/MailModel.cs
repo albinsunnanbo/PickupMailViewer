@@ -7,7 +7,7 @@ using System.Web;
 
 namespace PickupMailViewer.Models
 {
-    public class MailModel
+    public class MailModel : MessageModel
     {
         private readonly CDO.Message mail;
         private readonly string mailPath;
@@ -18,7 +18,7 @@ namespace PickupMailViewer.Models
         }
 
         [Newtonsoft.Json.JsonIgnore]
-        public DateTime SentOn
+        override public DateTime SentOn
         {
             get
             {
@@ -26,15 +26,7 @@ namespace PickupMailViewer.Models
             }
         }
 
-        public string SentOnFormatted
-        {
-            get
-            {
-                return mail.SentOn.ToString();
-            }
-        }
-
-        public string ToAddress
+        override public string ToAddress
         {
             get
             {
@@ -42,7 +34,7 @@ namespace PickupMailViewer.Models
             }
         }
 
-        public string FromAddress
+        override public string FromAddress
         {
             get
             {
@@ -51,7 +43,7 @@ namespace PickupMailViewer.Models
         }
 
 
-        public string Subject
+        override public string Subject
         {
             get
             {
@@ -59,10 +51,10 @@ namespace PickupMailViewer.Models
             }
         }
 
-        public bool BodyIsHTML { get { return (!string.IsNullOrEmpty(mail.HTMLBody)); } }
+        override public bool BodyIsHTML { get { return (!string.IsNullOrEmpty(mail.HTMLBody)); } }
 
         [Newtonsoft.Json.JsonIgnore]
-        public string Body
+        override public string Body
         {
             get
             {
@@ -79,6 +71,14 @@ namespace PickupMailViewer.Models
             get
             {
                 return Path.GetFileName(mailPath);
+            }
+        }
+
+        public override string MessageType
+        {
+            get
+            {
+                return "Mail";
             }
         }
     }

@@ -15,23 +15,41 @@
     }
 
     $(function () {
-        $("body").on("click", ".mail-row", function () {
+        $("body").on("click", ".message-row", function () {
             var mailId = $(this).data("mail-id");
-            $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId },
-                function (message) {
-                    var linkedMessage = Autolinker.link(message);
-                    var dialogContent = $(linkedMessage);
-                    dialogContent.dialog({ width: 800, height: 600 });
-                }
-            );
+            if (mailId != "") {
+                $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId },
+                   function (message) {
+                       var linkedMessage = Autolinker.link(message);
+                       var dialogContent = $(linkedMessage);
+                       dialogContent.dialog({ width: 800, height: 600 });
+                   }
+               );
+            }
         });
     });
+
+    function renderMessageRow(message)
+    {
+        var newRow = ich.messageRowTemplate(message);
+
+        switch (message.MessageType) {
+            case "Mail":
+                newRow.addClass("mail-row");
+                break;
+            case "Sms":
+                newRow.addClass("sms-row");
+                break;
+        }
+
+        return newRow;
+    }
 
     var loadInitialList = function () {
         var messages = JSON.parse($("#initial-messages").html());
         $.each(messages, function (idx, message) {
-            var newRow = ich.mailRowTemplate(message);
-            $('#mail-table tbody').append(newRow); // add as last row
+            var newRow = renderMessageRow(message);
+            $('#message-table tbody').append(newRow); // add as last row
         });
     };
 
@@ -39,7 +57,7 @@
         // Reference the auto-generated proxy for the hub.
         var chat = $.connection.signalRHub;
         // Create a function that the hub can call back to display messages.
-        chat.client.newMail = function (messages) {
+        chat.client.newMessage = function (messages) {
             // if just a single string, wrap in an array
             if (!$.isArray(messages)) {
                 messages = [messages];
@@ -49,8 +67,10 @@
 
             // Add the messages to the page.
             $.each(messages, function (idx, message) {
-                var newRow = ich.mailRowTemplate(message);
-                $('#mail-table tbody').prepend(newRow); // add as first row after header row
+
+                var newRow = renderMessageRow(message);
+
+                $('#message-table tbody').prepend(newRow); // add as first row after header row
 
                 // flash row color
                 newRow.flash('255,255,0', 1000, 3);

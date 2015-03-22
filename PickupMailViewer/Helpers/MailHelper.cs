@@ -11,16 +11,20 @@ namespace PickupMailViewer.Helpers
     public static class MailHelper
     {
         const int maxRetries = 10;
+
         public static IEnumerable<string> ListMailFiles(string path)
         {
             return Directory.EnumerateFiles(path, "*.eml");
         }
 
-        public static ConcurrentDictionary<string, CDO.Message> messageCache = new ConcurrentDictionary<string, CDO.Message>();
+        private static readonly ConcurrentDictionary<string, CDO.Message> messageCache = 
+            new ConcurrentDictionary<string, CDO.Message>();
+
         public static CDO.Message ReadMessage(String emlFileName)
         {
             return messageCache.GetOrAdd(emlFileName, f => ReadMessageUnCached(f));
         }
+
         private static CDO.Message ReadMessageUnCached(String emlFileName)
         {
             for (int i = 0; i < maxRetries; i++)
@@ -40,11 +44,11 @@ namespace PickupMailViewer.Helpers
                     msg.DataSource.Save();
                     return msg;
                 }
-                catch (Exception)
+                catch (IOException ex)
                 {
-                    if (i + 1 == maxRetries)
+                    if (i + 1 >= maxRetries || ex.HResult != -2147024864)
                     {
-                        // Rethrow last time
+                        // Rethrow last time or if it isn't a file lock problem.
                         throw;
                     }
                 }
