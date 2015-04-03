@@ -1,4 +1,4 @@
-﻿@model PickupMailViewer.Models.MailModel
+@model PickupMailViewer.Models.MailModel
 
 <div>
     @Html.ActionLink("Download mail", "DownloadMail", new { mailId = @Model.MailId })
@@ -15,7 +15,7 @@
         }
         else
         {
-            @Model.Body;
+            <pre>@Model.Body</pre>
         }
     </div>
 </div>
