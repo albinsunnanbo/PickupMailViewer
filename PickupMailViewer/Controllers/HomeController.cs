@@ -57,7 +57,7 @@ namespace PickupMailViewer.Controllers
             var filePath = Path.Combine(Properties.Settings.Default.MailDir, mailId);
             if (!MailHelper.ListMailFiles(Properties.Settings.Default.MailDir).Contains(filePath))
             {
-                throw new ArgumentException("mailId is not in while list", "mailId");
+                throw new ArgumentException("mailId is not in white list", "mailId");
             }
             return PartialView(new MailModel(filePath));
         }
