@@ -12,8 +12,9 @@ var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
 var concat = require('gulp-concat');
 
+var handlebarTemplates = 'templates/*.handlebars';
 gulp.task('templates', function () {
-    gulp.src('templates/*.handlebars')
+    gulp.src(handlebarTemplates)
       .pipe(handlebars())
       .pipe(wrap('Handlebars.template(<%= contents %>)'))
       .pipe(declare({
@@ -23,3 +24,6 @@ gulp.task('templates', function () {
       .pipe(concat('templates.js'))
       .pipe(gulp.dest('js/dist'));
 });
+
+
+gulp.watch(handlebarTemplates, ['templates']);
