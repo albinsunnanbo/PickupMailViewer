@@ -29,9 +29,8 @@
         });
     });
 
-    function renderMessageRow(message)
-    {
-        var newRow = ich.messageRowTemplate(message);
+    function renderMessageRow(message) {
+        var newRow = $(mailviewer.handlebars.templates.mailrow(message));
 
         switch (message.MessageType) {
             case "Mail":
