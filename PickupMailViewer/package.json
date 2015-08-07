@@ -1,6 +1,9 @@
 {
   "version": "0.0.0",
   "name": "PickupMailViewer",
+  "dependencies": {
+    "handlebars": "3.0.3"
+  },
   "devDependencies": {
     "del": "^1.1.1",
     "gulp": "^3.8.10",
@@ -8,7 +11,6 @@
     "gulp-handlebars": "4.0.0",
     "gulp-wrap": "0.11.0",
     "gulp-declare": "0.3.0",
-    "gulp-concat": "2.6.0",
-    "handlebars": "3.0.3"
+    "gulp-concat": "2.6.0"
   }
 }
