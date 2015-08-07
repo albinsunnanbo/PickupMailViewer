@@ -207,6 +207,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="gulpfile.js" />
     <Content Include="js\dist\templates.js" />
+    <Content Include="node_modules\handlebars\dist\handlebars.runtime.js" />
     <Content Include="package.json" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="Properties\Settings.settings">
