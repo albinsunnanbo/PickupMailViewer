@@ -1,0 +1,13 @@
+version: 1.0.{build}
+before_build:
+- cd PickupMailViewer
+- npm install
+- gulp
+- cd ..
+build:
+  publish_wap: true
+  verbosity: minimal
+artifacts:
+- path: Deploy
+  name: MailViewerWebDeploy
+  type: WebDeployPackage
