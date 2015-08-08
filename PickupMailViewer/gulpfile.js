@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild='default' />
+﻿/// <binding BeforeBuild='default' ProjectOpened='watch' />
 'use strict';
 
 var gulp = require('gulp');
@@ -24,5 +24,6 @@ gulp.task('templates', function () {
       .pipe(gulp.dest('templates/dist'));
 });
 
-
-gulp.watch(handlebarTemplates, ['templates']);
+gulp.task('watch', function () {
+    gulp.watch(handlebarTemplates, ['templates']);
+});
