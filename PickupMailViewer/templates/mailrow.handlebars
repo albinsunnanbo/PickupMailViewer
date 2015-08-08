@@ -1,7 +1,11 @@
-﻿<tr class="message-row" data-mail-id="{{MailId}}">
+﻿<tr class="message-row"{{#if MailId}} data-mail-id="{{MailId}}"{{/if}}>
     <td>
+        {{#is MessageType "Mail"}}
         <span class="glyphicon glyphicon-envelope"></span>
+        {{/is}}
+        {{#is MessageType "Sms"}}
         <span class="glyphicon glyphicon-phone"></span>
+        {{/is}}
     </td>
     <td>
         {{SentOnFormatted}}

@@ -28,6 +28,7 @@ namespace PickupMailViewer
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                       "~/node_modules/handlebars/dist/handlebars.runtime.js",
+                      "~/node_modules/swag/lib/swag.js",
                       "~/templates/dist/*.js",
                       "~/Scripts/Autolinker.js",
                       "~/ViewScripts/app.js"));

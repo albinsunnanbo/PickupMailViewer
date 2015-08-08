@@ -23,8 +23,8 @@ textarea {
     max-width: 280px;
 }
 
-
-.mail-row:hover {
+/* Only rows with mail-id are clickable */
+.message-row[data-mail-id]:hover {
     background-color: rgba(139, 149, 255, 0.56) !important; /* !important required to override jQuery animate*/
     cursor: pointer;
 }
@@ -34,19 +34,4 @@ textarea {
 
 .ui-widget-content .mail-body a {
     color: #428bca;
-}
-
-#message-table .glyphicon
-{
-    display: none;
-}
-
-#message-table .mail-row .glyphicon-envelope
-{
-    display: inline;
-}
-
-#message-table .sms-row .glyphicon-phone
-{
-    display: inline;
 }

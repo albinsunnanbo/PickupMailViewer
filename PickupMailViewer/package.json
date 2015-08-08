@@ -2,7 +2,8 @@
   "version": "0.0.0",
   "name": "PickupMailViewer",
   "dependencies": {
-    "handlebars": "3.0.3"
+    "handlebars": "3.0.3",
+    "swag": "0.7.0"
   },
   "devDependencies": {
     "del": "^1.1.1",

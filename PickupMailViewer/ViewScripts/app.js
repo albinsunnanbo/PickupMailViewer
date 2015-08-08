@@ -3,6 +3,7 @@
 (function () {
     "use strict";
 
+    Swag.registerHelpers(Handlebars);
 
     jQuery.fn.flash = function (color, duration, noTimes, durationOut) {
         noTimes = noTimes || 1;
@@ -17,7 +18,7 @@
     $(function () {
         $("body").on("click", ".message-row", function () {
             var mailId = $(this).data("mail-id");
-            if (mailId != "") {
+            if (typeof(mailId) !== "undefined") {
                 $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId },
                    function (message) {
                        var linkedMessage = Autolinker.link(message);
@@ -31,16 +32,6 @@
 
     function renderMessageRow(message) {
         var newRow = $(mailviewer.handlebars.templates.mailrow(message));
-
-        switch (message.MessageType) {
-            case "Mail":
-                newRow.addClass("mail-row");
-                break;
-            case "Sms":
-                newRow.addClass("sms-row");
-                break;
-        }
-
         return newRow;
     }
 
