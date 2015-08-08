@@ -1,8 +1,9 @@
 version: 1.0.{build}
 before_build:
 - cd PickupMailViewer
+- npm install -g gulp
 - npm install
-- gulp
+- node node_modules\gulp\bin\gulp.js
 - cd ..
 build:
   publish_wap: true
