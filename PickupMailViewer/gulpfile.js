@@ -21,8 +21,7 @@ gulp.task('templates', function () {
           namespace: 'mailviewer.handlebars.templates',
           noRedeclare: true, // Avoid duplicate declarations
       }))
-      .pipe(concat('templates.js'))
-      .pipe(gulp.dest('js/dist'));
+      .pipe(gulp.dest('templates/dist'));
 });
 
 

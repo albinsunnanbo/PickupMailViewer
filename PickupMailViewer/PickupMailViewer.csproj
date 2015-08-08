@@ -206,7 +206,6 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="gulpfile.js" />
-    <Content Include="js\dist\templates.js" />
     <Content Include="node_modules\handlebars\dist\handlebars.runtime.js" />
     <Content Include="package.json" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
@@ -236,6 +235,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="templates\dist\mailrow.js" />
     <Content Include="ViewScripts\app.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
