@@ -53,7 +53,9 @@
                 messages = [messages];
             }
 
-            messages.reverse(); // since we are adding the last element at the top
+            if (onTop) {
+                messages.reverse(); // since we are adding the last element at the top
+            }
 
             // Add the messages to the page.
             $.each(messages, function (idx, message) {
