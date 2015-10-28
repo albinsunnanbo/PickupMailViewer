@@ -30,8 +30,8 @@ namespace PickupMailViewer
             if (e.ChangeType == WatcherChangeTypes.Created)
             {
                 var mail = new MailModel(e.FullPath);
-                var context = GlobalHost.ConnectionManager.GetHubContext<SignalRHub>();
-                context.Clients.All.newMessage(mail);
+                var context = GlobalHost.ConnectionManager.GetHubContext<SignalRHub, ClientInterface>();
+                context.Clients.All.newMessage(mail, true);
             }
         }
     }

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<PickupMailViewer.Models.MessageModel>
+﻿@model IEnumerable<PickupMailViewer.Models.MessageTimeModel>
 <script id="initial-messages" type="application/json">
     @* Initial mails in JSON format *@
-    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))
+    @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(m => m.Model.Value)))
 </script>
 <table class="table" id="message-table">
     <thead>

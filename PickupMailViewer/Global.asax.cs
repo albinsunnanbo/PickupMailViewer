@@ -22,22 +22,6 @@ namespace PickupMailViewer
 
             MailWatcher.Init();
             SmsWatcher.Init();
-            Task.Factory.StartNew(FillCache);
-        }
-
-        private void FillCache()
-        {
-            var mailPaths = MailHelper.ListMailFiles(Properties.Settings.Default.MailDir);
-            foreach (var mailPath in mailPaths.Reverse()) // Fill cache from reverse to not run from the same direction as HomeController.GetMailListModel
-            {
-                MailHelper.ReadMessage(mailPath);
-            }
-
-            var smsPaths = SmsHelper.ListSmsFiles(Properties.Settings.Default.MailDir);
-            foreach (var smsPath in smsPaths.Reverse())
-            {
-                SmsHelper.ReadMessage(smsPath);
-            }
         }
     }
 }

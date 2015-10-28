@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -12,21 +13,22 @@ namespace PickupMailViewer.Controllers
 {
     public class HomeController : Controller
     {
+        const int initialPageSize = 20;
         public ActionResult Index()
         {
-            return View(GetMessageListModel());
+            return View(GetMessageListModel().Take(20));
         }
 
-        private static IOrderedEnumerable<MessageModel> GetMessageListModel()
+        public static IEnumerable<MessageTimeModel> GetMessageListModel()
         {
             var mailPaths = MailHelper.ListMailFiles(Properties.Settings.Default.MailDir);
-            var mails = mailPaths.Select(path => new MailModel(path));
+            var mails = mailPaths.Select(path => new MessageTimeModel { Model = new Lazy<MessageModel>(() => new MailModel(path.FullName)), MessageTime = path.CreationTimeUtc });
 
             var smsPaths = SmsHelper.ListSmsFiles(Properties.Settings.Default.MailDir);
-            var sms = smsPaths.Select(path => new SmsModel(path));
+            var sms = smsPaths.Select(path => new MessageTimeModel { Model = new Lazy<MessageModel>(() => new SmsModel(path.FullName)), MessageTime = path.CreationTimeUtc });
 
-            var messages = mails.Cast<MessageModel>().Concat(sms)
-                .OrderByDescending(m => m.SentOn);
+            var messages = mails.Concat(sms)
+                .OrderByDescending(m => m.MessageTime);
 
             return messages;
         }
@@ -38,7 +40,7 @@ namespace PickupMailViewer.Controllers
                 throw new ArgumentException("Invalid characters in mailId", "mailId");
             }
             var filePath = Path.Combine(Properties.Settings.Default.MailDir, mailId);
-            if (!MailHelper.ListMailFiles(Properties.Settings.Default.MailDir).Contains(filePath))
+            if (!MailHelper.ListMailFiles(Properties.Settings.Default.MailDir).Select(f => f.FullName).Contains(filePath))
             {
                 throw new ArgumentException("mailId is not in white list", "mailId");
             }
@@ -55,7 +57,7 @@ namespace PickupMailViewer.Controllers
                 throw new ArgumentException("Invalid characters in mailId", "mailId");
             }
             var filePath = Path.Combine(Properties.Settings.Default.MailDir, mailId);
-            if (!MailHelper.ListMailFiles(Properties.Settings.Default.MailDir).Contains(filePath))
+            if (!MailHelper.ListMailFiles(Properties.Settings.Default.MailDir).Select(f => f.FullName).Contains(filePath))
             {
                 throw new ArgumentException("mailId is not in white list", "mailId");
             }

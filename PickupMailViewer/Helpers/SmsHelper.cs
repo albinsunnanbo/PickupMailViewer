@@ -13,9 +13,9 @@ namespace PickupMailViewer.Helpers
     {
         const int maxRetries = 10;
 
-        public static IEnumerable<string> ListSmsFiles(string path)
+        public static IEnumerable<FileInfo> ListSmsFiles(string path)
         {
-            return Directory.EnumerateFiles(path, "*.sms");
+            return new DirectoryInfo(path).EnumerateFiles("*.sms");
         }
 
         private static readonly ConcurrentDictionary<string, SmsData> messageCache

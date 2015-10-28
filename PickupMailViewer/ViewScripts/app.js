@@ -18,7 +18,7 @@
     $(function () {
         $("body").on("click", ".message-row", function () {
             var mailId = $(this).data("mail-id");
-            if (typeof(mailId) !== "undefined") {
+            if (typeof (mailId) !== "undefined") {
                 $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId },
                    function (message) {
                        var linkedMessage = Autolinker.link(message);
@@ -47,7 +47,7 @@
         // Reference the auto-generated proxy for the hub.
         var chat = $.connection.signalRHub;
         // Create a function that the hub can call back to display messages.
-        chat.client.newMessage = function (messages) {
+        chat.client.newMessage = function (messages, onTop) {
             // if just a single string, wrap in an array
             if (!$.isArray(messages)) {
                 messages = [messages];
@@ -59,18 +59,27 @@
             $.each(messages, function (idx, message) {
 
                 var newRow = renderMessageRow(message);
+                if (onTop) {
+                    $('#message-table tbody').prepend(newRow); // add as first row after header row
 
-                $('#message-table tbody').prepend(newRow); // add as first row after header row
-
-                // flash row color
-                newRow.flash('255,255,0', 1000, 3);
-                newRow.flash('255,255,128', 1000, 1, 60000);
-
+                    // flash row color
+                    newRow.flash('255,255,0', 1000, 3);
+                    newRow.flash('255,255,128', 1000, 1, 60000);
+                }
+                else {
+                    $('#message-table tbody').append(newRow); // add at bottom
+                }
             });
         };
         // Start the connection.
         $.connection.hub.start().done(function () {
             // Connect event
+            var lastId = "";
+            var messages = JSON.parse($("#initial-messages").html());
+            $.each(messages, function (idx, message) {
+                lastId = message.MessageId;
+            });
+            chat.server.getRest(lastId);
         });
 
         continousReconnect();
