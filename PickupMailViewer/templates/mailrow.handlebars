@@ -1,4 +1,4 @@
-﻿<tr class="message-row"{{#is MessageType "Mail"}} data-mail-id="{{MessageId}}"{{/is}}>
+﻿<tr class="message-row{{#is MessageType "Mail"}} clickable-row{{/is}}"{{#is MessageType "Mail"}} data-mail-id="{{MessageId}}"{{/is}}>
     <td>
         {{#is MessageType "Mail"}}
         <span class="glyphicon glyphicon-envelope"></span>

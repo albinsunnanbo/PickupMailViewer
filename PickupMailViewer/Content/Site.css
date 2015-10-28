@@ -24,7 +24,7 @@ textarea {
 }
 
 /* Only rows with mail-id are clickable */
-.message-row[data-mail-id]:hover {
+.clickable-row:hover {
     background-color: rgba(139, 149, 255, 0.56) !important; /* !important required to override jQuery animate*/
     cursor: pointer;
 }
