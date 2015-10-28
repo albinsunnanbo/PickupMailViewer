@@ -5,7 +5,7 @@ this["mailviewer"]["handlebars"]["templates"]["mailrow"] = Handlebars.template({
     var helper;
 
   return " data-mail-id=\""
-    + this.escapeExpression(((helper = (helper = helpers.MailId || (depth0 != null ? depth0.MailId : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"MailId","hash":{},"data":data}) : helper)))
+    + this.escapeExpression(((helper = (helper = helpers.MessageId || (depth0 != null ? depth0.MessageId : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"MessageId","hash":{},"data":data}) : helper)))
     + "\"";
 },"3":function(depth0,helpers,partials,data) {
     return "        <span class=\"glyphicon glyphicon-envelope\"></span>\r\n";
@@ -15,7 +15,7 @@ this["mailviewer"]["handlebars"]["templates"]["mailrow"] = Handlebars.template({
     var stack1, helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
   return "<tr class=\"message-row\""
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.MailId : depth0),{"name":"if","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.is || (depth0 && depth0.is) || alias1).call(depth0,(depth0 != null ? depth0.MessageType : depth0),"Mail",{"name":"is","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + ">\r\n    <td>\r\n"
     + ((stack1 = (helpers.is || (depth0 && depth0.is) || alias1).call(depth0,(depth0 != null ? depth0.MessageType : depth0),"Mail",{"name":"is","hash":{},"fn":this.program(3, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + ((stack1 = (helpers.is || (depth0 && depth0.is) || alias1).call(depth0,(depth0 != null ? depth0.MessageType : depth0),"Sms",{"name":"is","hash":{},"fn":this.program(5, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")

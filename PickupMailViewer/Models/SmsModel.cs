@@ -12,7 +12,7 @@ namespace PickupMailViewer.Models
     {
         readonly SmsData loadedData;
 
-        public SmsModel(string path)
+        public SmsModel(string path) : base(path)
         {
             loadedData = SmsHelper.ReadMessage(path);
         }

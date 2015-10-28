@@ -13,9 +13,9 @@ namespace PickupMailViewer.Helpers
     {
         const int maxRetries = 10;
 
-        public static IEnumerable<string> ListMailFiles(string path)
+        public static IEnumerable<FileInfo> ListMailFiles(string path)
         {
-            return Directory.EnumerateFiles(path, "*.eml");
+            return new DirectoryInfo(path).EnumerateFiles("*.eml");
         }
 
         private static readonly ConcurrentDictionary<string, CDO.Message> messageCache = 

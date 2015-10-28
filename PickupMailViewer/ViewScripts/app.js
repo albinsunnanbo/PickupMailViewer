@@ -18,7 +18,7 @@
     $(function () {
         $("body").on("click", ".message-row", function () {
             var mailId = $(this).data("mail-id");
-            if (typeof(mailId) !== "undefined") {
+            if (typeof (mailId) !== "undefined") {
                 $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId },
                    function (message) {
                        var linkedMessage = Autolinker.link(message);
@@ -68,9 +68,36 @@
 
             });
         };
+        chat.client.oldMessage = function (messages) {
+            // if just a single string, wrap in an array
+            if (!$.isArray(messages)) {
+                messages = [messages];
+            }
+
+            // messages.reverse(); // since we are adding the last element at the top
+
+            // Add the messages to the page.
+            $.each(messages, function (idx, message) {
+
+                var newRow = renderMessageRow(message);
+
+                $('#message-table tbody').append(newRow); // add as first row after header row
+
+                //// flash row color
+                //newRow.flash('255,255,0', 1000, 3);
+                //newRow.flash('255,255,128', 1000, 1, 60000);
+
+            });
+        };
         // Start the connection.
         $.connection.hub.start().done(function () {
             // Connect event
+            var lastId = "";
+            var messages = JSON.parse($("#initial-messages").html());
+            $.each(messages, function (idx, message) {
+                lastId = message.MessageId;
+            });
+            chat.server.getRest(lastId);
         });
 
         continousReconnect();

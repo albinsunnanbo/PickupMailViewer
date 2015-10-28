@@ -10,10 +10,8 @@ namespace PickupMailViewer.Models
     public class MailModel : MessageModel
     {
         private readonly CDO.Message mail;
-        private readonly string mailPath;
-        public MailModel(string mailPath)
+        public MailModel(string mailPath):base(mailPath)
         {
-            this.mailPath = mailPath;
             this.mail = MailHelper.ReadMessage(mailPath);
         }
 
@@ -30,7 +28,7 @@ namespace PickupMailViewer.Models
         {
             get
             {
-                return string.Join(", ", mail.To.Split(',').Select(a => new System.Net.Mail.MailAddress(a).Address));
+                return string.Join(", ", mail.To.Split(',').Where(a => a.Length > 0).Select(a => new System.Net.Mail.MailAddress(a).Address));
             }
         }
 
@@ -63,14 +61,6 @@ namespace PickupMailViewer.Models
                     return mail.HTMLBody;
                 }
                 return mail.TextBody;
-            }
-        }
-
-        public string MailId
-        {
-            get
-            {
-                return Path.GetFileName(mailPath);
             }
         }
 
