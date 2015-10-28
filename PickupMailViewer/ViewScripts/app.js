@@ -47,7 +47,7 @@
         // Reference the auto-generated proxy for the hub.
         var chat = $.connection.signalRHub;
         // Create a function that the hub can call back to display messages.
-        chat.client.newMessage = function (messages) {
+        chat.client.newMessage = function (messages, onTop) {
             // if just a single string, wrap in an array
             if (!$.isArray(messages)) {
                 messages = [messages];
@@ -59,34 +59,16 @@
             $.each(messages, function (idx, message) {
 
                 var newRow = renderMessageRow(message);
+                if (onTop) {
+                    $('#message-table tbody').prepend(newRow); // add as first row after header row
 
-                $('#message-table tbody').prepend(newRow); // add as first row after header row
-
-                // flash row color
-                newRow.flash('255,255,0', 1000, 3);
-                newRow.flash('255,255,128', 1000, 1, 60000);
-
-            });
-        };
-        chat.client.oldMessage = function (messages) {
-            // if just a single string, wrap in an array
-            if (!$.isArray(messages)) {
-                messages = [messages];
-            }
-
-            // messages.reverse(); // since we are adding the last element at the top
-
-            // Add the messages to the page.
-            $.each(messages, function (idx, message) {
-
-                var newRow = renderMessageRow(message);
-
-                $('#message-table tbody').append(newRow); // add as first row after header row
-
-                //// flash row color
-                //newRow.flash('255,255,0', 1000, 3);
-                //newRow.flash('255,255,128', 1000, 1, 60000);
-
+                    // flash row color
+                    newRow.flash('255,255,0', 1000, 3);
+                    newRow.flash('255,255,128', 1000, 1, 60000);
+                }
+                else {
+                    $('#message-table tbody').append(newRow); // add at bottom
+                }
             });
         };
         // Start the connection.

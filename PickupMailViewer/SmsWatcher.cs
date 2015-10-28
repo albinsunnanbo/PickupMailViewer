@@ -33,8 +33,8 @@ namespace PickupMailViewer
             {
                 var sms = new SmsModel(e.FullPath);
 
-                var context = GlobalHost.ConnectionManager.GetHubContext<SignalRHub>();
-                context.Clients.All.newMessage(sms);
+                var context = GlobalHost.ConnectionManager.GetHubContext<SignalRHub, ClientInterface>();
+                context.Clients.All.newMessage(sms, true);
             }
         }
     }
