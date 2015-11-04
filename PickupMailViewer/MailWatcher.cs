@@ -13,7 +13,7 @@ namespace PickupMailViewer
         private static FileSystemWatcher fsw;
         public static void Init()
         {
-            fsw = new FileSystemWatcher(Properties.Settings.Default.MailDir, "*.eml");
+            fsw = new FileSystemWatcher(Properties.Settings.Default.MailDir, Properties.Settings.Default.FilePattern);
             fsw.Created += OnNewMailFileCreated;
             fsw.Error += OnError;
             fsw.EnableRaisingEvents = true;

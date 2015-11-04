@@ -15,7 +15,7 @@ namespace PickupMailViewer.Helpers
 
         public static IEnumerable<FileInfo> ListMailFiles(string path)
         {
-            return new DirectoryInfo(path).EnumerateFiles("*.eml");
+            return new DirectoryInfo(path).EnumerateFiles(Properties.Settings.Default.FilePattern);
         }
 
         private static readonly ConcurrentDictionary<string, CDO.Message> messageCache = 
