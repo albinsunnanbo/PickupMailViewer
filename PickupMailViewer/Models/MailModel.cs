@@ -71,5 +71,35 @@ namespace PickupMailViewer.Models
                 return "Mail";
             }
         }
+
+        public override string[] AttachmentNames
+        {
+            get
+            {
+                var attachments = mail.Attachments.OfType<CDO.IBodyPart>();
+                return attachments.Select(a => a.FileName).ToArray();
+            }
+        }
+
+        public string GetAttachmentMediaTypeFromIdx(int idx)
+        {
+            var attachments = mail.Attachments.OfType<CDO.IBodyPart>();
+            var attachment = attachments.Skip(idx).FirstOrDefault();
+            return attachment.ContentMediaType;
+        }
+
+        public byte[] GetAttachmentContentFromIdx(int idx)
+        {
+            var attachments = mail.Attachments.OfType<CDO.IBodyPart>();
+            var attachment =attachments.Skip(idx).FirstOrDefault();
+
+            ADODB.Stream stm = attachment.GetDecodedContentStream();
+
+            // cast to COM IStream and load into byte array
+            var comStream = (System.Runtime.InteropServices.ComTypes.IStream)stm;
+            byte[] attachmentData = new byte[stm.Size];
+            comStream.Read(attachmentData, stm.Size, IntPtr.Zero);
+            return attachmentData;
+        }
     }
 }

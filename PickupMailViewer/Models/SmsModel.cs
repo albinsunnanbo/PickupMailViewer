@@ -56,5 +56,13 @@ namespace PickupMailViewer.Models
                 return "Sms";
             }
         }
+
+        public override string[] AttachmentNames
+        {
+            get
+            {
+                return new string[0];
+            }
+        }
     }
 }

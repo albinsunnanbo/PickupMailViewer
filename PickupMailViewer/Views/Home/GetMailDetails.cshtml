@@ -7,6 +7,12 @@
     <div>To: @Model.ToAddress</div>
     <div>Sent date: @Html.DisplayFor(m => m.SentOn)</div>
     <div>Subject: @Model.Subject</div>
+    @for (int idx = 0; idx < Model.AttachmentNames.Length; idx++)
+    {
+        <div>
+            Attachment: <a href="@Url.Action("DownloadMailAttachment", new { mailId = @Model.MessageId, idx = idx, })"><span class="glyphicon glyphicon-paperclip" /> @Model.AttachmentNames[idx]</a>
+        </div>
+    }
     <hr />
     <div class="mail-body">
         @if (Model.BodyIsHTML)

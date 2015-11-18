@@ -18,7 +18,7 @@ namespace MessageCreator
                 return false;
             }
 
-            if(string.IsNullOrEmpty(smtpClient.PickupDirectoryLocation))
+            if (string.IsNullOrEmpty(smtpClient.PickupDirectoryLocation))
             {
                 Console.WriteLine("No pickup directory location specified.");
                 return false;
@@ -38,14 +38,26 @@ namespace MessageCreator
 
             message.To.Add("recipient@example.com");
 
-            smtpClient.Send(message);
+            using (var stream = new MemoryStream())
+            {
+                using (var writer = new StreamWriter(stream))
+                {
+                    writer.Write("Attachment content" + Environment.NewLine + "More content");
+                    writer.Flush();
+                    stream.Seek(0, SeekOrigin.Begin);
+                    var a = new Attachment(stream, "sampleAttachment.txt", "text/plain");
+                    message.Attachments.Add(a);
+
+                    smtpClient.Send(message);
+                }
+            }
         }
 
         static void CreateSms(string location)
         {
             var fileName = Path.Combine(location, Guid.NewGuid().ToString() + ".sms");
 
-            using(var writer = new StreamWriter(fileName))
+            using (var writer = new StreamWriter(fileName))
             {
                 // Too small to be worth bringing in a proper serializer.
                 writer.Write("{{ From:\"070-123456\", To:\"{0}\", Text:\"Lorem ipsum dolor sit amet.\" }}",
@@ -55,9 +67,9 @@ namespace MessageCreator
 
         static void Main(string[] args)
         {
-            using(var smtpClient = new SmtpClient())
+            using (var smtpClient = new SmtpClient())
             {
-                if(!ValidateConfig(smtpClient))
+                if (!ValidateConfig(smtpClient))
                 {
                     return;
                 }

@@ -49,6 +49,25 @@ namespace PickupMailViewer.Controllers
             return result;
         }
 
+        public FileResult DownloadMailAttachment(string mailId, int idx)
+        {
+            if (mailId.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) > 0)
+            {
+                throw new ArgumentException("Invalid characters in mailId", "mailId");
+            }
+            var filePath = Path.Combine(Properties.Settings.Default.MailDir, mailId);
+            if (!MailHelper.ListMailFiles(Properties.Settings.Default.MailDir).Select(f => f.FullName).Contains(filePath))
+            {
+                throw new ArgumentException("mailId is not in white list", "mailId");
+            }
+
+            var mail = new MailModel(filePath);
+
+            var result = File(mail.GetAttachmentContentFromIdx(idx), mail.GetAttachmentMediaTypeFromIdx(idx));
+            result.FileDownloadName = mail.AttachmentNames[idx];
+            return result;
+        }
+
         [OutputCache(Location = OutputCacheLocation.Downstream, VaryByParam = "mailId", Duration = 3600 * 24 * 7)] // No need to output cache on the server since the mail content is cached internally anyway
         public ActionResult GetMailDetails(string mailId)
         {
