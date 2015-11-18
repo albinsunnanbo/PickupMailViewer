@@ -31,11 +31,14 @@ namespace PickupMailViewer.Properties {
                 return ((string)(this["MailDir"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("*.eml")]
-        public string FilePattern
-        {
-            get { return ((string) (this["FilePattern"])); }
+        public string FilePattern {
+            get {
+                return ((string)(this["FilePattern"]));
+            }
         }
     }
 }

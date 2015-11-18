@@ -5,5 +5,8 @@
     <Setting Name="MailDir" Type="System.String" Scope="Application">
       <Value Profile="(Default)">c:\temp</Value>
     </Setting>
+    <Setting Name="FilePattern" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">*.eml</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
