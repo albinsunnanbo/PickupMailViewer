@@ -36,6 +36,10 @@ namespace PickupMailViewer.Models
         {
             get
             {
+                if (string.IsNullOrEmpty(mail.From))
+                {
+                    return string.Empty;
+                }
                 return new System.Net.Mail.MailAddress(mail.From).Address;
             }
         }
