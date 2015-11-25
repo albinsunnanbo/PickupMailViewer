@@ -43,5 +43,7 @@ namespace PickupMailViewer.Models
         public abstract string MessageType { get; }
 
         public abstract string[] AttachmentNames { get; }
+
+        public abstract string[] AttachmentSizes { get; }
     }
 }

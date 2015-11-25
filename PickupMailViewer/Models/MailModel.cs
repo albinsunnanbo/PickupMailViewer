@@ -10,7 +10,7 @@ namespace PickupMailViewer.Models
     public class MailModel : MessageModel
     {
         private readonly CDO.Message mail;
-        public MailModel(string mailPath):base(mailPath)
+        public MailModel(string mailPath) : base(mailPath)
         {
             this.mail = MailHelper.ReadMessage(mailPath);
         }
@@ -81,6 +81,34 @@ namespace PickupMailViewer.Models
             }
         }
 
+        public override string[] AttachmentSizes
+        {
+            get
+            {
+                var attachments = mail.Attachments.OfType<CDO.IBodyPart>();
+                return attachments.Select(a =>
+                {
+                    ADODB.Stream stm = a.GetDecodedContentStream();
+                    var len = stm.Size;
+                    stm.Close();
+                    return FormatLength(len);
+                }).ToArray();
+            }
+        }
+
+        private string FormatLength(int length)
+        {
+            if(length >= 1024*1024)
+            {
+                return Math.Round(length * 1.0 / (1024 * 1024), 1) + "MB";
+            }
+            else if (length >= 1024 )
+            {
+                return Math.Round(length * 1.0 / (1024 ), 1) + "kB";
+            }
+            return length + "B";
+        }
+
         public string GetAttachmentMediaTypeFromIdx(int idx)
         {
             var attachments = mail.Attachments.OfType<CDO.IBodyPart>();
@@ -91,7 +119,7 @@ namespace PickupMailViewer.Models
         public byte[] GetAttachmentContentFromIdx(int idx)
         {
             var attachments = mail.Attachments.OfType<CDO.IBodyPart>();
-            var attachment =attachments.Skip(idx).FirstOrDefault();
+            var attachment = attachments.Skip(idx).FirstOrDefault();
 
             ADODB.Stream stm = attachment.GetDecodedContentStream();
 
@@ -99,6 +127,8 @@ namespace PickupMailViewer.Models
             var comStream = (System.Runtime.InteropServices.ComTypes.IStream)stm;
             byte[] attachmentData = new byte[stm.Size];
             comStream.Read(attachmentData, stm.Size, IntPtr.Zero);
+
+            stm.Close();
             return attachmentData;
         }
     }

@@ -10,7 +10,7 @@
     @for (int idx = 0; idx < Model.AttachmentNames.Length; idx++)
     {
         <div>
-            Attachment: <a href="@Url.Action("DownloadMailAttachment", new { mailId = @Model.MessageId, idx = idx, })"><span class="glyphicon glyphicon-paperclip" /> @Model.AttachmentNames[idx]</a>
+            Attachment: <a href="@Url.Action("DownloadMailAttachment", new { mailId = @Model.MessageId, idx = idx, })"><span class="glyphicon glyphicon-paperclip" /> @Model.AttachmentNames[idx]</a> (@Model.AttachmentSizes[idx])
         </div>
     }
     <hr />

@@ -64,5 +64,12 @@ namespace PickupMailViewer.Models
                 return new string[0];
             }
         }
+        public override string[] AttachmentSizes
+        {
+            get
+            {
+                return new string[0];
+            }
+        }
     }
 }
