@@ -10,7 +10,14 @@
     @for (int idx = 0; idx < Model.AttachmentNames.Length; idx++)
     {
         <div>
-            Attachment: <a href="@Url.Action("DownloadMailAttachment", new { mailId = @Model.MessageId, idx = idx, })"><span class="glyphicon glyphicon-paperclip" /> @Model.AttachmentNames[idx]</a> (@Model.AttachmentSizes[idx])
+            Attachment: <a href="@Url.Action("DownloadMailAttachment", new { mailId = @Model.MessageId, idx = idx, })"><span class="glyphicon glyphicon-download-alt" /> @Model.AttachmentNames[idx]</a>
+            @if (Model.GetAttachmentMediaTypeFromIdx(idx).Contains("text/plain")|| Model.GetAttachmentMediaTypeFromIdx(idx).Contains("text/html"))
+            {
+                <text>
+                    / <a href="@Url.Action("PreviewMailAttachment", new { mailId = @Model.MessageId, idx = idx, })" target="_blank"><span class="glyphicon glyphicon-eye-open" /> Preview</a> /
+                </text>
+            }
+            (@Model.AttachmentSizes[idx])
         </div>
     }
     <hr />

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -66,6 +67,23 @@ namespace PickupMailViewer.Controllers
             var result = File(mail.GetAttachmentContentFromIdx(idx), mail.GetAttachmentMediaTypeFromIdx(idx));
             result.FileDownloadName = mail.AttachmentNames[idx];
             return result;
+        }
+
+        public ActionResult PreviewMailAttachment(string mailId, int idx)
+        {
+            if (mailId.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) > 0)
+            {
+                throw new ArgumentException("Invalid characters in mailId", "mailId");
+            }
+            var filePath = Path.Combine(Properties.Settings.Default.MailDir, mailId);
+            if (!MailHelper.ListMailFiles(Properties.Settings.Default.MailDir).Select(f => f.FullName).Contains(filePath))
+            {
+                throw new ArgumentException("mailId is not in white list", "mailId");
+            }
+
+            var mail = new MailModel(filePath);
+
+            return Content(Encoding.UTF8.GetString(mail.GetAttachmentContentFromIdx(idx)), mail.GetAttachmentMediaTypeFromIdx(idx));
         }
 
         [OutputCache(Location = OutputCacheLocation.Downstream, VaryByParam = "mailId", Duration = 3600 * 24 * 7)] // No need to output cache on the server since the mail content is cached internally anyway
