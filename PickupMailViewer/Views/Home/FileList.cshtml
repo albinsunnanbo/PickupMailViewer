@@ -3,6 +3,7 @@
     @* Initial mails in JSON format *@
     @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(m => m.Model.Value)))
 </script>
+<input type="hidden" id="subpath" value="@ViewData["subPath"]" />
 <table class="table" id="message-table">
     <thead>
         <tr>

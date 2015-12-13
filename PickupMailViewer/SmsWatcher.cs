@@ -16,6 +16,7 @@ namespace PickupMailViewer
         public static void Init()
         {
             fsw = new FileSystemWatcher(Properties.Settings.Default.MailDir, "*.sms");
+            fsw.IncludeSubdirectories = true;
             fsw.Created += OnNewSmsFileCreated;
             fsw.Error += OnError;
             fsw.EnableRaisingEvents = true;
@@ -32,9 +33,10 @@ namespace PickupMailViewer
             if (e.ChangeType == WatcherChangeTypes.Created)
             {
                 var sms = new SmsModel(e.FullPath);
+                var subPath = Path.GetDirectoryName(e.FullPath).Substring(Properties.Settings.Default.MailDir.Length).TrimStart('\\');
 
                 var context = GlobalHost.ConnectionManager.GetHubContext<SignalRHub, ClientInterface>();
-                context.Clients.All.newMessage(sms, true);
+                context.Clients.All.newMessage(sms, true, subPath);
             }
         }
     }
