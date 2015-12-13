@@ -19,7 +19,7 @@
         $("body").on("click", ".message-row", function () {
             var mailId = $(this).data("mail-id");
             if (typeof (mailId) !== "undefined") {
-                $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId },
+                $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId , subPath: subpath},
                    function (message) {
                        var linkedMessage = Autolinker.link(message);
                        var dialogContent = $(linkedMessage);
@@ -43,11 +43,19 @@
         });
     };
 
+    var subpath;
     $(function () {
+        subpath = $("#subpath").val();
+
         // Reference the auto-generated proxy for the hub.
         var chat = $.connection.signalRHub;
         // Create a function that the hub can call back to display messages.
-        chat.client.newMessage = function (messages, onTop) {
+        chat.client.newMessage = function (messages, onTop, msgSubPath) {
+            if (msgSubPath != subpath) {
+                // Not for the current path
+                return;
+            }
+
             // if just a single string, wrap in an array
             if (!$.isArray(messages)) {
                 messages = [messages];
@@ -81,7 +89,7 @@
             $.each(messages, function (idx, message) {
                 lastId = message.MessageId;
             });
-            chat.server.getRest(lastId);
+            chat.server.getRest(lastId, subpath);
         });
 
         continousReconnect();

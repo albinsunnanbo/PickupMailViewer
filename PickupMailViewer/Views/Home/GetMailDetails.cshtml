@@ -1,7 +1,7 @@
 @model PickupMailViewer.Models.MailModel
 
 <div>
-    <a href="@Url.Action("DownloadMail", new { mailId = @Model.MessageId })"><span class="glyphicon glyphicon-download" /> Download mail</a>
+    <a href="@Url.Action("DownloadMail", new { mailId = @Model.MessageId, subPath = ViewData["subPath"] })"><span class="glyphicon glyphicon-download" /> Download mail</a>
     <hr />
     <div>From: @Model.FromAddress</div>
     <div>To: @Model.ToAddress</div>
@@ -10,11 +10,11 @@
     @for (int idx = 0; idx < Model.AttachmentNames.Length; idx++)
     {
         <div>
-            Attachment: <a href="@Url.Action("DownloadMailAttachment", new { mailId = @Model.MessageId, idx = idx, })"><span class="glyphicon glyphicon-download-alt" /> @Model.AttachmentNames[idx]</a>
+            Attachment: <a href="@Url.Action("DownloadMailAttachment", new { mailId = @Model.MessageId, subPath = ViewData["subPath"], idx = idx, })"><span class="glyphicon glyphicon-download-alt" /> @Model.AttachmentNames[idx]</a>
             @if (Model.GetAttachmentMediaTypeFromIdx(idx).Contains("text/plain")|| Model.GetAttachmentMediaTypeFromIdx(idx).Contains("text/html"))
             {
                 <text>
-                    / <a href="@Url.Action("PreviewMailAttachment", new { mailId = @Model.MessageId, idx = idx, })" target="_blank"><span class="glyphicon glyphicon-eye-open" /> Preview</a> /
+                    / <a href="@Url.Action("PreviewMailAttachment", new { mailId = @Model.MessageId, subPath = ViewData["subPath"], idx = idx, })" target="_blank"><span class="glyphicon glyphicon-eye-open" /> Preview</a> /
                 </text>
             }
             (@Model.AttachmentSizes[idx])

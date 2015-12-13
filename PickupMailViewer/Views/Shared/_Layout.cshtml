@@ -26,8 +26,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { id = "" }, null)</li>
                 </ul>
+                @foreach (var dir in PickupMailViewer.Helpers.DirectoryHelper.ListDirectories())
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("/ " + dir, "Index", "Home", new { id = dir }, null)</li>
+                    </ul>
+                }
             </div>
         </div>
     </div>
