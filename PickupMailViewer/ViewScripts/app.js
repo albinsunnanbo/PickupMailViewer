@@ -33,6 +33,9 @@
             e.preventDefault();
             var searchText = $("#search-text").val();
 
+            var group = $(this).find(".input-group");
+            group.removeClass("has-error");
+
             if (searchText.length >= 3) {
                 $(".message-row").hide();
                 $.get(baseUrl + "Home/Search", { searchText: searchText, subPath: subpath },
@@ -45,6 +48,9 @@
             }
             else if (searchText.length === 0) {
                 $(".message-row").show();
+            }
+            else {
+                group.addClass("has-error");
             }
         });
     });

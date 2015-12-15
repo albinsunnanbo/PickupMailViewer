@@ -35,3 +35,12 @@ textarea {
 .ui-widget-content .mail-body a {
     color: #428bca;
 }
+
+.jumbotron {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.has-error input {
+    border-color: red;
+}
