@@ -42,7 +42,18 @@ namespace PickupMailViewer.Controllers
 
         public ActionResult Search(string searchText, string subPath)
         {
-            return Json(MailHelper.SearchCache(searchText, subPath).Concat(SmsHelper.SearchCache(searchText, subPath)), JsonRequestBehavior.AllowGet);
+            searchText = searchText.ToLowerInvariant();
+            var messageModels = MailHelper.SearchCache(subPath).Concat(SmsHelper.SearchCache(subPath));
+            var result = messageModels
+                .Where(smsModel =>
+                smsModel.ToAddress.ToLowerInvariant().Contains(searchText) ||
+                (smsModel.FromAddress != null && smsModel.FromAddress.ToLowerInvariant().Contains(searchText)) ||
+                (smsModel.Subject != null && smsModel.Subject.ToLowerInvariant().Contains(searchText)) ||
+                smsModel.Body.ToLowerInvariant().Contains(searchText)
+                )
+                .Select(m => m.MessageId);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public FileResult DownloadMail(string mailId, string subPath)

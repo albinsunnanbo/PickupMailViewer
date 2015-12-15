@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PickupMailViewer.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace PickupMailViewer.Helpers
         }
 
 
-        public static IEnumerable<string> SearchCache(string searchString, string subPath)
+        public static IEnumerable<MessageModel> SearchCache(string subPath)
         {
             var basePath = Path.Combine(Properties.Settings.Default.MailDir, subPath);
             foreach (var messagePath in messageCache.Keys)
@@ -59,16 +60,7 @@ namespace PickupMailViewer.Helpers
                 var smsModel = new Models.SmsModel(messagePath);
                 if (messagePath == Path.Combine(basePath, smsModel.MessageId))
                 {
-                    if (
-                        smsModel.ToAddress.Contains(searchString) ||
-                        (smsModel.FromAddress != null && smsModel.FromAddress.Contains(searchString)) ||
-                        (smsModel.Subject != null && smsModel.Subject.Contains(searchString)) ||
-                        smsModel.Body.Contains(searchString)
-                        )
-                    {
-                        yield return smsModel.MessageId;
-                        continue;
-                    }
+                    yield return smsModel;
                 }
             }
         }

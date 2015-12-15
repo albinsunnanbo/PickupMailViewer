@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PickupMailViewer.Models;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -66,7 +67,7 @@ namespace PickupMailViewer.Helpers
             throw new InvalidOperationException("Should not arrive here.");
         }
 
-        public static IEnumerable<string> SearchCache(string searchString, string subPath)
+        public static IEnumerable<MessageModel> SearchCache(string subPath)
         {
             var basePath = Path.Combine(Properties.Settings.Default.MailDir, subPath);
             foreach (var messagePath in messageCache.Keys)
@@ -74,16 +75,7 @@ namespace PickupMailViewer.Helpers
                 var mailModel = new Models.MailModel(messagePath);
                 if (messagePath == Path.Combine(basePath, mailModel.MessageId))
                 {
-                    if (
-                        mailModel.ToAddress.Contains(searchString) ||
-                        mailModel.FromAddress.Contains(searchString) ||
-                        mailModel.Subject.Contains(searchString) ||
-                        mailModel.Body.Contains(searchString)
-                        )
-                    {
-                        yield return mailModel.MessageId;
-                        continue;
-                    }
+                    yield return mailModel;
                 }
             }
         }
