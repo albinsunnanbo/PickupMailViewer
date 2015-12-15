@@ -4,8 +4,19 @@
 
 <div class="jumbotron">
     <h1>Mail viewer</h1>
+    <form id="search-form">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <input id="search-text" type="text" class="form-control" placeholder="Search messages...">
+                    <span class="input-group-btn">
+                        <button id="search-btn" class="btn" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+    </form>
 </div>
-
 <div class="row">
     <div class="col-md-12">
         @Html.Partial("FileList")

@@ -16,16 +16,35 @@
     }
 
     $(function () {
-        $("body").on("click", ".message-row", function () {
+        $("body").on("click", ".clickable-row", function () {
             var mailId = $(this).data("mail-id");
             if (typeof (mailId) !== "undefined") {
-                $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId , subPath: subpath},
+                $.get(baseUrl + "Home/GetMailDetails", { mailId: mailId, subPath: subpath },
                    function (message) {
                        var linkedMessage = Autolinker.link(message);
                        var dialogContent = $(linkedMessage);
                        dialogContent.dialog({ width: 800, height: 600 });
                    }
                );
+            }
+        });
+
+        $("#search-form").submit(function (e) {
+            e.preventDefault();
+            var searchText = $("#search-text").val();
+
+            if (searchText.length >= 3) {
+                $(".message-row").hide();
+                $.get(baseUrl + "Home/Search", { searchText: searchText, subPath: subpath },
+                   function (messageIds) {
+                       $.each(messageIds, function (idx, val) {
+                           $(".message-row[data-mail-id='" + val + "']").show();
+                       });
+                   }
+               );
+            }
+            else if (searchText.length === 0) {
+                $(".message-row").show();
             }
         });
     });

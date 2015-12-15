@@ -18,7 +18,7 @@ namespace PickupMailViewer.Helpers
             return new DirectoryInfo(path).EnumerateFiles(Properties.Settings.Default.FilePattern);
         }
 
-        private static readonly ConcurrentDictionary<string, CDO.Message> messageCache = 
+        private static readonly ConcurrentDictionary<string, CDO.Message> messageCache =
             new ConcurrentDictionary<string, CDO.Message>();
 
         public static CDO.Message ReadMessage(String emlFileName)
@@ -64,6 +64,28 @@ namespace PickupMailViewer.Helpers
                 System.Threading.Thread.Sleep(100);
             }
             throw new InvalidOperationException("Should not arrive here.");
+        }
+
+        public static IEnumerable<string> SearchCache(string searchString, string subPath)
+        {
+            var basePath = Path.Combine(Properties.Settings.Default.MailDir, subPath);
+            foreach (var messagePath in messageCache.Keys)
+            {
+                var mailModel = new Models.MailModel(messagePath);
+                if (messagePath == Path.Combine(basePath, mailModel.MessageId))
+                {
+                    if (
+                        mailModel.ToAddress.Contains(searchString) ||
+                        mailModel.FromAddress.Contains(searchString) ||
+                        mailModel.Subject.Contains(searchString) ||
+                        mailModel.Body.Contains(searchString)
+                        )
+                    {
+                        yield return mailModel.MessageId;
+                        continue;
+                    }
+                }
+            }
         }
     }
 }

@@ -40,6 +40,11 @@ namespace PickupMailViewer.Controllers
             return messages;
         }
 
+        public ActionResult Search(string searchText, string subPath)
+        {
+            return Json(MailHelper.SearchCache(searchText, subPath).Concat(SmsHelper.SearchCache(searchText, subPath)), JsonRequestBehavior.AllowGet);
+        }
+
         public FileResult DownloadMail(string mailId, string subPath)
         {
             ValidateMailId(mailId);

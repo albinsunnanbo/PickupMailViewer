@@ -49,5 +49,28 @@ namespace PickupMailViewer.Helpers
             }
             throw new InvalidOperationException("Should not arrive here.");
         }
+
+
+        public static IEnumerable<string> SearchCache(string searchString, string subPath)
+        {
+            var basePath = Path.Combine(Properties.Settings.Default.MailDir, subPath);
+            foreach (var messagePath in messageCache.Keys)
+            {
+                var smsModel = new Models.SmsModel(messagePath);
+                if (messagePath == Path.Combine(basePath, smsModel.MessageId))
+                {
+                    if (
+                        smsModel.ToAddress.Contains(searchString) ||
+                        (smsModel.FromAddress != null && smsModel.FromAddress.Contains(searchString)) ||
+                        (smsModel.Subject != null && smsModel.Subject.Contains(searchString)) ||
+                        smsModel.Body.Contains(searchString)
+                        )
+                    {
+                        yield return smsModel.MessageId;
+                        continue;
+                    }
+                }
+            }
+        }
     }
 }
