@@ -69,11 +69,24 @@
         return newRow;
     }
 
+    var flashRow = function (row) {
+        // flash row color
+        row.flash('255,255,0', 1000, 3);
+        row.flash('255,255,128', 1000, 1, 60000);
+    };
+
+    var addFlashForNewMessage = function (row, message) {
+        if (message.AgeInSeconds < 60) {
+            flashRow(row);
+        }
+    };
+
     var loadInitialList = function () {
         var messages = JSON.parse($("#initial-messages").html());
         $.each(messages, function (idx, message) {
             var newRow = renderMessageRow(message);
             $('#message-table tbody').append(newRow); // add as last row
+            addFlashForNewMessage(newRow, message);
         });
     };
 
@@ -105,13 +118,11 @@
                 var newRow = renderMessageRow(message);
                 if (onTop) {
                     $('#message-table tbody').prepend(newRow); // add as first row after header row
-
-                    // flash row color
-                    newRow.flash('255,255,0', 1000, 3);
-                    newRow.flash('255,255,128', 1000, 1, 60000);
+                    flashRow(newRow);
                 }
                 else {
                     $('#message-table tbody').append(newRow); // add at bottom
+                    addFlashForNewMessage(newRow, message);
                 }
             });
         };

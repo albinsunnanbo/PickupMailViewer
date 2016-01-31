@@ -36,6 +36,14 @@ namespace PickupMailViewer.Models
             }
         }
 
+        public int AgeInSeconds
+        {
+            get
+            {
+                return (int)((DateTime.Now - SentOn).TotalSeconds);
+            }
+        }
+
         public abstract string Subject { get; }
 
         public abstract string ToAddress { get; }

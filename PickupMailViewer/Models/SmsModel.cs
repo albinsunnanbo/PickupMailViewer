@@ -25,6 +25,7 @@ namespace PickupMailViewer.Models
             }
         }
 
+        [Newtonsoft.Json.JsonIgnore]
         override public DateTime SentOn
         {
             get
