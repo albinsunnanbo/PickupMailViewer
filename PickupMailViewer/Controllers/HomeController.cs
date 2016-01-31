@@ -104,7 +104,7 @@ namespace PickupMailViewer.Controllers
             return Content(Encoding.UTF8.GetString(mail.GetAttachmentContentFromIdx(idx)), mail.GetAttachmentMediaTypeFromIdx(idx));
         }
 
-        [OutputCache(Location = OutputCacheLocation.Downstream, VaryByParam = "*", Duration = 3600 * 24 * 7)] // No need to output cache on the server since the mail content is cached internally anyway
+        [OutputCache(Location = OutputCacheLocation.Downstream, VaryByParam = "*", Duration = 600)] // No need to output cache on the server since the mail content is cached internally anyway
         public ActionResult GetMailDetails(string mailId, string subPath)
         {
             if (mailId.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) > 0)
