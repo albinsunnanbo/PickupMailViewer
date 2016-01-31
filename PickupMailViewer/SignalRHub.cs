@@ -30,7 +30,6 @@ namespace PickupMailViewer
                     .Skip(1); // First is the matched message
             }
 
-            var context = GlobalHost.ConnectionManager.GetHubContext<SignalRHub, ClientInterface>();
             var batch = new List<MessageModel>();
             foreach (var r in rest)
             {
@@ -39,7 +38,7 @@ namespace PickupMailViewer
                 if (batch.Count > batchSize)
                 {
                     // Send batch
-                    context.Clients.All.newMessage(batch, false, path);
+                    this.Clients.Caller.newMessage(batch, false, path);
                     batch = new List<MessageModel>();
                     System.Threading.Thread.Sleep(25);
                 }
@@ -47,7 +46,7 @@ namespace PickupMailViewer
             if (batch.Any())
             {
                 // send remaining
-                context.Clients.All.newMessage(batch, false, path);
+                this.Clients.Caller.newMessage(batch, false, path);
             }
         }
     }
