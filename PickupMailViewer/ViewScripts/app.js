@@ -3,6 +3,15 @@
 (function () {
     "use strict";
 
+    var signalRReconnectingClass = "signalr-reconnecting";
+    var addReconnecting = function () {
+        $("body").addClass(signalRReconnectingClass);
+    };
+    var removeReconnecting = function () {
+        $("body").removeClass(signalRReconnectingClass);
+    };
+
+
     Swag.registerHelpers(Handlebars);
 
     jQuery.fn.flash = function (color, duration, noTimes, durationOut) {
@@ -73,9 +82,9 @@
         subpath = $("#subpath").val();
 
         // Reference the auto-generated proxy for the hub.
-        var chat = $.connection.signalRHub;
+        var mailviewerHub = $.connection.signalRHub;
         // Create a function that the hub can call back to display messages.
-        chat.client.newMessage = function (messages, onTop, msgSubPath) {
+        mailviewerHub.client.newMessage = function (messages, onTop, msgSubPath) {
             if (msgSubPath != subpath) {
                 // Not for the current path
                 return;
@@ -114,11 +123,32 @@
             $.each(messages, function (idx, message) {
                 lastId = message.MessageId;
             });
-            chat.server.getRest(lastId, subpath);
+            mailviewerHub.server.getRest(lastId, subpath);
         });
 
-        continousReconnect();
-        setupNotifications();
+        // Setup reconnection event
+        $.connection.hub.disconnected(function () {
+            addReconnecting();
+            setTimeout(function () {
+                $.connection.hub.start().done(onReConnected);
+            }, 5000); // Restart connection after 5 seconds.
+        });
+
+        $.connection.hub.reconnecting(function () {
+            addReconnecting();
+        });
+
+        var onReConnected = function () {
+            // Remove all existing messages
+            $('#message-table tbody').empty();
+            // Get all messages again
+            var lastId = '';
+            mailviewerHub.server.getRest(lastId, subpath);
+
+            removeReconnecting();
+        };
+        
+        $.connection.hub.reconnected(onReConnected);
 
         loadInitialList();
     });
@@ -129,33 +159,4 @@
         return encodedValue;
     }
 
-    // Setup infinite reconnect
-    var continousReconnect = function () {
-        $.connection.hub.disconnected(function () {
-            setTimeout(function () {
-                $.connection.hub.start();
-            }, 5000); // Restart connection after 5 seconds.
-        });
-    };
-
-    var setupNotifications = function () {
-        $.connection.hub.connectionSlow(function () {
-            $("#notification-area").text("Connection is slow");
-        });
-
-        $.connection.hub.reconnecting(function () {
-            $("#notification-area").text("Reconnecting...");
-        });
-
-        $.connection.hub.reconnected(function () {
-            var notificationText = "Connected!";
-            $("#notification-area").text(notificationText);
-            // Dirty hack to clear, just check that we still have the same text
-            setTimeout(function () {
-                if ($("#notification-area").text() === notificationText); {
-                    $("#notification-area").text(''); // Clear
-                }
-            }, 5000);
-        });
-    };
 })();
