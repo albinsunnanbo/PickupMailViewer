@@ -115,6 +115,13 @@
                 }
             });
         };
+
+        mailviewerHub.client.onServerReconnectEvent = function () {
+            // Listen to the server side reconnect event since calling mailviewerHub.server.getRest
+            // from the client side onReconnect event caused intermittent hangs
+            onReConnected();
+        };
+
         // Start the connection.
         $.connection.hub.start().done(function () {
             // Connect event
@@ -142,13 +149,11 @@
             // Remove all existing messages
             $('#message-table tbody').empty();
             // Get all messages again
-            var lastId = '';
+            var lastId = ''; // Start from the beginning
             mailviewerHub.server.getRest(lastId, subpath);
 
             removeReconnecting();
         };
-        
-        $.connection.hub.reconnected(onReConnected);
 
         loadInitialList();
     });

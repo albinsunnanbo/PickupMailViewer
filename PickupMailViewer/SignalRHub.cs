@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace PickupMailViewer
@@ -15,39 +16,52 @@ namespace PickupMailViewer
         void newMessage(MessageModel message, bool onTop, string subPath);
 
         void newMessage(IEnumerable<MessageModel> messages, bool onTop, string subPath);
+
+        void onServerReconnectEvent();
     }
 
     public class SignalRHub : Hub<ClientInterface>
     {
+        public override Task OnReconnected()
+        {
+            this.Clients.Caller.onServerReconnectEvent();
+            return base.OnReconnected();
+        }
+
         public void GetRest(string lastMessageId, string path)
         {
-            const int batchSize = 10;
-            var rest = HomeController.GetMessageListModel(path);
-            if (!string.IsNullOrEmpty(lastMessageId))
+            var caller = this.Clients.Caller;
+            Task.Factory.StartNew(() =>
             {
-                rest = rest
-                    .SkipWhile(m => m.Model.Value.MessageId != lastMessageId)
-                    .Skip(1); // First is the matched message
-            }
-
-            var batch = new List<MessageModel>();
-            foreach (var r in rest)
-            {
-                batch.Add(r.Model.Value);
-
-                if (batch.Count > batchSize)
+                // Async to avoid blocking the GetRest call
+                const int batchSize = 10;
+                var rest = HomeController.GetMessageListModel(path);
+                if (!string.IsNullOrEmpty(lastMessageId))
                 {
-                    // Send batch
-                    this.Clients.Caller.newMessage(batch, false, path);
-                    batch = new List<MessageModel>();
-                    System.Threading.Thread.Sleep(25);
+                    rest = rest
+                        .SkipWhile(m => m.Model.Value.MessageId != lastMessageId)
+                        .Skip(1); // First is the matched message
                 }
-            }
-            if (batch.Any())
-            {
-                // send remaining
-                this.Clients.Caller.newMessage(batch, false, path);
-            }
+
+                var batch = new List<MessageModel>();
+                foreach (var r in rest)
+                {
+                    batch.Add(r.Model.Value);
+
+                    if (batch.Count > batchSize)
+                    {
+                        // Send batch
+                        caller.newMessage(batch, false, path);
+                        batch = new List<MessageModel>();
+                        System.Threading.Thread.Sleep(25);
+                    }
+                }
+                if (batch.Any())
+                {
+                    // send remaining
+                    caller.newMessage(batch, false, path);
+                }
+            });
         }
     }
 }
