@@ -54,7 +54,7 @@ You may of course use a path different from `c:\temp`
 No way!
 ###The longer story###
 By default there is no login, no encryption. Nothing that prevents anyone to read your sensitive mails.
-However the PickupMailViewer at least makes an effort to only display information from eml files and only from the MailDir path. No parent folders, no subfolders. That's about the protection you get.
+However the PickupMailViewer at least makes an effort to only display information from eml files and only from the MailDir path. No parent folders. That's about the protection you get.
 
 ##Continous integration##
 Latest build exists on [AppVeyor](https://ci.appveyor.com/project/albinsunnanbo/pickupmailviewer).  
