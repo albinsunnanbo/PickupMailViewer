@@ -31,6 +31,8 @@ namespace PickupMailViewer
                       "~/node_modules/swag/lib/swag.js",
                       "~/templates/dist/*.js",
                       "~/Scripts/Autolinker.js",
+                      "~/Scripts/DataTables/jQuery.dataTables.js",
+                      "~/Scripts/DataTables/dataTables.fixedHeader.js",
                       "~/ViewScripts/app.js"));
 
 
@@ -40,6 +42,10 @@ namespace PickupMailViewer
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
               "~/Content/themes/base/*.css"));
+
+            bundles.Add(new StyleBundle("~/Content/DataTables/css/css").Include(
+              "~/Content/DataTables/css/dataTables.bootstrap.css",
+              "~/Content/DataTables/css/fixedHeader.bootstrap.css"));
         }
     }
 }

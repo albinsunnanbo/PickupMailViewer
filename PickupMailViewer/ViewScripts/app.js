@@ -81,6 +81,17 @@
         }
     };
 
+    var initSorting = function () {
+        var options = {
+            fixedHeader: true,
+            paging: false,
+            info: false,
+            searching: false
+        };
+
+        $('#message-table').DataTable(options);
+    };
+
     var loadInitialList = function () {
         var messages = JSON.parse($("#initial-messages").html());
         $.each(messages, function (idx, message) {
@@ -88,6 +99,9 @@
             $('#message-table tbody').append(newRow); // add as last row
             addFlashForNewMessage(newRow, message);
         });
+
+        // Init sorting when we have got some contents
+        initSorting();
     };
 
     var subpath;

@@ -4,10 +4,10 @@
     @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(m => m.Model.Value)))
 </script>
 <input type="hidden" id="subpath" value="@ViewData["subPath"]" />
-<table class="table" id="message-table">
+<table class="table" id="message-table" data-order="[]"> @*Turn off initial sorting*@
     <thead>
         <tr>
-            <th></th>
+            <th data-orderable="false"></th>
             <th>
                 Sent Date
             </th>
